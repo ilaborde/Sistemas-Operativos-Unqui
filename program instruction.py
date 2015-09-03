@@ -1,13 +1,5 @@
 import unittest
 
-def imprimirMensaje():
-    if x == 1:
-        print ("hola")
-    else:
-        print("chau")
-        
-
-
 class Program:
     
     def __init__(self):
