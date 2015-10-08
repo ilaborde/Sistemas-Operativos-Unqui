@@ -1,6 +1,10 @@
 class Clock:
-    def __init__(self, cpuToTick):
-        self.cpu = cpuToTick
+    def __init__(self):
+        self.cpuList = []
+
+    def registrycpu(self, cpu):
+        self.cpuList.append(cpu)
 
     def tick(self):
-        self.cpu.fetch()
+        for cpu in self.cpuList:
+            cpu.fetch()

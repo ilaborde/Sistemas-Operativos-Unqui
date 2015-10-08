@@ -2,10 +2,10 @@ class Pcb:
 
     def __init__(self, position, count):
         self.pc = 0
-        self.PcbId = 1
+        self.pid = 1
         self.memoryPosition = position
-        self.programCount = count
+        self.programLength = count
     
-    def IncrementPc(self):
+    def incrementPc(self):
         self.pc = self.pc + 1
 

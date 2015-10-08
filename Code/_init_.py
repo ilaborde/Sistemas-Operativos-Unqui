@@ -24,7 +24,8 @@ if __name__ == '__main__':
 
     pcb = Pcb(initialPosition, len(program.instructions))
 
-    clock = Clock(cpu)
+    clock = Clock()
+    clock.registrycpu(cpu)
     cpu.setPcb(pcb)
 
     clock.tick()
