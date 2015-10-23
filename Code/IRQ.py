@@ -1,3 +1,4 @@
+##Interruption request
 class IRQ:
     kill = 1
     timeOut = 2

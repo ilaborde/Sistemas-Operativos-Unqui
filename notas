@@ -1,0 +1,6 @@
+Para el martes que viene implementacion:
+
+--cpu fecth(sin threads)
+--scheduler(RR # Quantum)
+--interrupciones(kill,io,timeout,new)
+

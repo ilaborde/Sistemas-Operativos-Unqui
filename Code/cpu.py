@@ -12,17 +12,17 @@ class Cpu:
 
     def fetch(self):
         if self.currentPcb is not None:
-            if self.currentPcb.pc == self.currentPcb.programLength:
+            # get a cell from memory using program counter + currentpcb.memoryPosition
+            cell = self.memory.get(self.currentPcb.pc + self.currentPcb.memoryPosition)
+            if cell.type == Instruction.kill:
                 # end of the program
                 self.interruptionManager.handle(IRQ(IRQ.kill, self.currentPcb))
                 return
-            # obtiene una celda de memoria calculando el program counter
-            # del currentPcb mas la celda de memoria actual
-            cell = self.memory.get(self.currentPcb.pc + self.currentPcb.memoryPosition)
+
             self.currentPcb.incrementPc()
 
-            if cell.resource == Instruction.cpu:
+            if cell.type == Instruction.cpu:
                 print(cell.text)
 
-            elif cell.resource == Instruction.io:
+            elif cell.type == Instruction.io:
                 self.interruptionManager.handle(IRQ(IRQ.IO, self.currentPcb))
