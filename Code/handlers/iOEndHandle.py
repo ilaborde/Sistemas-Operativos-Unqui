@@ -1,6 +1,7 @@
 class IOEndHandle:
     def __init__(self,scheduler):
-        pass
+        self.scheduler= scheduler
 
     def handle(self, irq):
-        pass
+        self.scheduler.addPcbToReadyQueue(irq.currentPcb)
+        print ("Processing of the instruction finished by the resource..")

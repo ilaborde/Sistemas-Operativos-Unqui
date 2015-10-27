@@ -3,7 +3,7 @@ class InterruptionManager:
     def __init__(self):
         self.handles = {}
 
-    def registry(self, irqKey, handle):
+    def registerHandler(self, irqKey, handle):
         self.handles[irqKey] = handle
 
     def handle(self, irq):

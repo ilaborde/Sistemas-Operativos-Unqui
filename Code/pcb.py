@@ -7,5 +7,5 @@ class Pcb:
         self.programLength = count
     
     def incrementPc(self):
-        self.pc = self.pc + 1
+        self.pc += 1
 

@@ -11,5 +11,5 @@ class ResourceType:
 class Instruction:
     def __init__(self, text, type, resourcetype):
         self.text = text
-        self.type = type
-        self.resourceType = resourcetype
+        self.type = type ##type of instruction
+        self.resourceType = resourcetype ##type of resource(e: monitor)

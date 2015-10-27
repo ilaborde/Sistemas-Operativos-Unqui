@@ -1,5 +1,3 @@
-from queue import Queue
-
 
 class Scheduler:
     def __init__(self, cpu,queue):

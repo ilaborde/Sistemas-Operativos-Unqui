@@ -1,5 +1,4 @@
 class IOHandle:
-    # "lo manda a la cola de waiting y el IO lo procesa"
     def __init__(self,devicemanager, memory):
         self.deviceManager = devicemanager
         self.memory = memory

@@ -1,5 +1,4 @@
 class KillHandle:
-    # libera los recursos
     def __init__(self,scheduler):
         self.scheduler = scheduler
 

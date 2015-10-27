@@ -3,13 +3,14 @@ class DeviceManager:
     def __init__(self):
         self.devices = {}
 
-    def registryDevice(self, resourceType, device):
+    def registerDevice(self, resourceType, device):
         self.devices[resourceType] = device
 
     def pushToDeviceQueue(self, instruction, pcb):
         device = self.devices[instruction.resourceType]
 
         if device is not None:
-            device.pushToQueue(instruction,pcb)
+            device.pushToQueue(pcb)
+            device.processInstruction()
         else:
             raise ValueError("Critical error: Handle not found")

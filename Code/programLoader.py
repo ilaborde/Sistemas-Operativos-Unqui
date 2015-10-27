@@ -3,17 +3,17 @@ from Code.pcb import Pcb
 
 
 class ProgramLoader:
-    def __init__(self,disk,memory,interruptionManager):
+    def __init__(self, disk, memory, interruptionmanager):
         self.disk = disk
-        self.interruptionManager = interruptionManager
+        self.interruptionManager = interruptionmanager
         self.memory = memory
 
-    def load(self,programName):
-        program = self.disk.getProgram(programName)
+    def load(self, programname):
+        program = self.disk.getProgram(programname)
         pcb = self.createPcb(program)
-        irq = IRQ(IRQ.New,pcb)
+        irq = IRQ(IRQ.New, pcb)
         self.interruptionManager.handle(irq)
 
-    def createPcb(self,program):
-        initialPosition = self.memory.put(program.instructions)
-        return Pcb(initialPosition, len(program.instructions))
+    def createPcb(self, program):
+        initialposition = self.memory.put(program.instructions)
+        return Pcb(initialposition, len(program.instructions))
