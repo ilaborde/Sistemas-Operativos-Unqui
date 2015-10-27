@@ -1,6 +1,5 @@
 class IOEndHandle:
-    # "lo manda a la cola de waiting y el IO lo procesa"
-    def __init__(self):
+    def __init__(self,scheduler):
         pass
 
     def handle(self, irq):

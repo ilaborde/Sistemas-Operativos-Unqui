@@ -1,4 +1,5 @@
 from Code.IRQ import IRQ
+from Code.instructions import InstructionType
 from Code.instructions import Instruction
 
 
@@ -14,15 +15,15 @@ class Cpu:
         if self.currentPcb is not None:
             # get a cell from memory using program counter + currentpcb.memoryPosition
             cell = self.memory.get(self.currentPcb.pc + self.currentPcb.memoryPosition)
-            if cell.type == Instruction.kill:
+            if cell.type == InstructionType.kill:
                 # end of the program
                 self.interruptionManager.handle(IRQ(IRQ.kill, self.currentPcb))
                 return
 
-            self.currentPcb.incrementPc()
-
-            if cell.type == Instruction.cpu:
+            if cell.type == InstructionType.cpu:
                 print(cell.text)
 
-            elif cell.type == Instruction.io:
+            elif cell.type == InstructionType.io:
                 self.interruptionManager.handle(IRQ(IRQ.IO, self.currentPcb))
+
+            self.currentPcb.incrementPc()

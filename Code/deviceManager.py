@@ -1,5 +1,3 @@
-from Code import pcb
-from Code import instructions
 
 class DeviceManager:
     def __init__(self):

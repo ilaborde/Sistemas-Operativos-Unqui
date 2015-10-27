@@ -1,7 +1,10 @@
+from queue import Queue
+
 class Monitor:
 
     def __init__(self):
-       pass
+       self.queue = Queue()
 
     def pushToQueue(self,instruction,pcb):
-        pass
+        self.queue.put(pcb)
+        print(instruction.text)
