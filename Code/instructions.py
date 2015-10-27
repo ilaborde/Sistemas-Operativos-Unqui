@@ -1,12 +1,15 @@
-class Instruction:
+class InstructionType:
     cpu = 1
     io = 2
     kill = 3
 
-    Monitor = 4
 
-    def __init__(self, text, type, resourceType):
+class ResourceType:
+    Monitor = 1
+
+
+class Instruction:
+    def __init__(self, text, type, resourcetype):
         self.text = text
         self.type = type
-        self.resourceType = resourceType
-
+        self.resourceType = resourcetype

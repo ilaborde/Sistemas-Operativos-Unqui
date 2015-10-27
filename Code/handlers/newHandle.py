@@ -1,7 +1,6 @@
 class NewHandle:
-    # "lo manda a la cola de waiting y el IO lo procesa"
-    def __init__(self):
-        pass
+    def __init__(self,readyQueue):
+        self.readyQueue = readyQueue
     
     def handle(self, irq):
-        pass
+        self.readyQueue.put(irq.currentPcb)
