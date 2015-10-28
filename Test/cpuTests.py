@@ -6,7 +6,7 @@ from Code.cpu import Cpu
 from Code.instructions import Instruction
 from Code.memory import Memory
 from Code.pcb import Pcb
-from Test.Matcher import Matcher
+from Test.matcher import Matcher
 
 
 class TestsCpu(unittest.TestCase):
