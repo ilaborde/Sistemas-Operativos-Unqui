@@ -8,4 +8,5 @@ class Scheduler:
         self.currentReadyQueue.put(pcb)
 
     def setNextPcbToCpu(self):
-        self.currentCpu.setPcb(self.currentReadyQueue.get())
+        if self.currentReadyQueue.qsize() > 0:
+            self.currentCpu.setPcb(self.currentReadyQueue.get())

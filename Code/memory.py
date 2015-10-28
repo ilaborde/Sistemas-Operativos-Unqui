@@ -4,7 +4,6 @@ class Memory:
 
     def put(self, programinstructions):
         # add instructions to the list and returns the program index
-
         self.cells = self.cells + programinstructions
         return len(self.cells) - len(programinstructions)
 

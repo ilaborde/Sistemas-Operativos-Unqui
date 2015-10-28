@@ -47,3 +47,4 @@ class Kernel:
         self.scheduler.setNextPcbToCpu()
         self.clock.tick()
         self.clock.tick()
+        self.clock.tick()

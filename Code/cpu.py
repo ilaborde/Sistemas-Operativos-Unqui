@@ -7,6 +7,7 @@ class Cpu:
     def __init__(self, memory, handle):
         self.memory = memory
         self.interruptionManager = handle
+        self.currentPcb = None
 
     def setPcb(self, pcb):
         self.currentPcb = pcb

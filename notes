@@ -1,0 +1,11 @@
+make the app multithread
+create console app
+create tests
+use a factory to configure kernel
+
+
+    kernel= Kernel()
+    kernerl.Startup()
+    kernel.run("xx")
+    kernel.Run("xx1")
+    kernel.shutdon()
