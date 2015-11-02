@@ -1,6 +1,7 @@
 make the app multithread
 create console app
 create tests
+round robin algo
 use a factory to configure kernel
 
 
