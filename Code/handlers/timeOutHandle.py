@@ -3,4 +3,6 @@ class TimeOutHandle:
         pass
 
     def handle(self, irq):
-        pass
+        self.scheduler.addPcbToReadyQueue(irq.currentPcb)
+        self.scheduler.currentCpu.currentPcb = None
+        self.scheduler.setNextPcbToCpu()

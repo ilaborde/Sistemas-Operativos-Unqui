@@ -30,7 +30,7 @@ class Kernel:
 
         self.cpu = Cpu(self.memory, self.interruptionManager)
         self.clock.registrycpu(self.cpu)
-        self.scheduler = Scheduler(self.cpu,self.readyQueue)
+        self.scheduler = Scheduler(self.cpu,self.readyQueue, 3)
 
         self.deviceManager.registerDevice(ResourceType.Monitor,Monitor(self.interruptionManager, self.memory))
 
@@ -40,7 +40,7 @@ class Kernel:
         self.interruptionManager.registerHandler(IRQ.EndIO, IOEndHandle(self.scheduler))
         self.interruptionManager.registerHandler(IRQ.New, NewHandle(self.readyQueue))
 
-        self.programLoader = ProgramLoader(self.disk,self.memory, self.interruptionManager)
+        self.programLoader = ProgramLoader(self.disk, self.memory, self.interruptionManager)
 
     def run(self):
         self.programLoader.load("program1")

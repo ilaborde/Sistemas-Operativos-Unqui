@@ -1,7 +1,8 @@
 make the app multithread
 create console app
-create tests
-round robin algo
+create tests +++++++++++++
+prioridad algoritmo
+scheduler diferentes implementaciones
 use a factory to configure kernel
 
 
@@ -10,3 +11,14 @@ use a factory to configure kernel
     kernel.run("xx")
     kernel.Run("xx1")
     kernel.shutdon()
+
+
+threads:
+    --cpu
+    --clock
+    --shell(optativo)
+    --kernel & interruption manager
+    --device manager
+
+
+    
