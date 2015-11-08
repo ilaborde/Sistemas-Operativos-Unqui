@@ -1,8 +1,8 @@
 class Pcb:
 
-    def __init__(self, position, count):
+    def __init__(self, position, pid, count):
         self.pc = 0
-        self.pid = 1
+        self.pid = pid
         self.memoryPosition = position
         self.programLength = count
     

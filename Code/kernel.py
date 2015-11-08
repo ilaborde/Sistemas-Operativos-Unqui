@@ -9,10 +9,11 @@ from Code.handlers.iOEndHandle import IOEndHandle
 from Code.handlers.newHandle import NewHandle
 from Code.handlers.timeOutHandle import TimeOutHandle
 from Code.instructions import ResourceType
+from Code.pcbTable import PcbTable
 from Code.programLoader import ProgramLoader
 from Code.scheduler import Scheduler
 from Code.cpu import *
-from Code.interruption_manager import *
+from Code.interruptionManager import *
 from Code.memory import Memory
 
 
@@ -27,6 +28,7 @@ class Kernel:
         self.readyQueue = Queue()
         self.disk = Disk()
         self.deviceManager = DeviceManager()
+        self.pcbTable = PcbTable()
 
         self.cpu = Cpu(self.memory, self.interruptionManager)
         self.clock.registrycpu(self.cpu)
@@ -40,7 +42,7 @@ class Kernel:
         self.interruptionManager.registerHandler(IRQ.EndIO, IOEndHandle(self.scheduler))
         self.interruptionManager.registerHandler(IRQ.New, NewHandle(self.readyQueue))
 
-        self.programLoader = ProgramLoader(self.disk, self.memory, self.interruptionManager)
+        self.programLoader = ProgramLoader(self.disk, self.memory, self.interruptionManager, self.pcbTable)
 
     def run(self):
         self.programLoader.load("program1")

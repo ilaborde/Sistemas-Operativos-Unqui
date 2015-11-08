@@ -5,13 +5,13 @@ from Code.program import Program
 class Disk:
     def __init__(self):
         self.programs = {}
-        instruction1 = Instruction("Cpu Instruction..", InstructionType.cpu, ResourceType.Monitor)
-        instruction2 = Instruction("Kill Instruction.", InstructionType.kill, ResourceType.Monitor)
-        program1 = Program()
 
-        program1.add(instruction1)
-        program1.add(instruction2)
-        self.programs["program1"] = program1
+        for x in range(1, 11):
+            program1 = Program()
+            program1.add(Instruction("Cpu Instruction..", InstructionType.cpu, ResourceType.Monitor))
+            program1.add(Instruction("Kill Instruction.", InstructionType.kill, ResourceType.Monitor))
+            self.programs["program" + str(x)] = program1
+
 
 
     def getProgram(self, programName):

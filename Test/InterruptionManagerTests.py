@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 from Code.IRQ import IRQ
-from Code.interruption_manager import InterruptionManager
+from Code.interruptionManager import InterruptionManager
 from Code.pcb import Pcb
 
 
