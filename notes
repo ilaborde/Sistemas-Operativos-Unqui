@@ -3,7 +3,7 @@ create console app
 create tests +++++++++++++
 prioridad algoritmo
 scheduler diferentes implementaciones
-use a factory to configure kernel
+use a factory to configure kernel (empezado)
 
 
     kernel= Kernel()
@@ -12,12 +12,13 @@ use a factory to configure kernel
     kernel.Run("xx1")
     kernel.shutdon()
 
-
 threads:
     --cpu
     --clock
     --shell(optativo)
     --kernel & interruption manager
     --device manager
+
+
 
 

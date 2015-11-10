@@ -1,7 +1,6 @@
-from Code.kernel import Kernel
-
+from Code.factories.kernelFactory import *
 
 if __name__ == '__main__':
-
-    kernel = Kernel()
+    kernel = kernelFactory().selectConfiguration(1)
+    kernel.loadProgram("program0")
     kernel.run()

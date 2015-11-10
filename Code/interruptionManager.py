@@ -1,7 +1,9 @@
+from threading import Thread
 
-class InterruptionManager:
+class InterruptionManager(Thread):
     def __init__(self):
         self.handles = {}
+        Thread.__init__(self)
 
     def registerHandler(self, irqKey, handle):
         self.handles[irqKey] = handle
