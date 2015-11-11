@@ -8,20 +8,15 @@ from Code.interruptionManager import InterruptionManager
 
 
 class interruptionManagerFactory:
-
     def __init__(self):
         pass
 
     def createElement(self):
+        return InterruptionManager()
 
-       return InterruptionManager()
-
-    def registryInterruptionManager(self, interruptionManager, deviceManager, scheduler, memory, readyQueue):
-
-        interruptionManager.registerHandler(IRQ.IRQ.kill, KillHandle(scheduler))
-        interruptionManager.registerHandler(IRQ.IRQ.timeOut, TimeOutHandle(scheduler))
-        interruptionManager.registerHandler(IRQ.IRQ.IO, IOHandle(deviceManager, memory, scheduler))
-        interruptionManager.registerHandler(IRQ.IRQ.EndIO, IOEndHandle(scheduler))
-        interruptionManager.registerHandler(IRQ.IRQ.New, NewHandle(readyQueue))
-
-
+    def registryInterruptionManager(self, interruptionmanager, devicenanager, scheduler, memory, readyqueue):
+        interruptionmanager.registerHandler(IRQ.IRQ.kill, KillHandle(scheduler))
+        interruptionmanager.registerHandler(IRQ.IRQ.timeOut, TimeOutHandle(scheduler))
+        interruptionmanager.registerHandler(IRQ.IRQ.IO, IOHandle(devicenanager, memory, scheduler))
+        interruptionmanager.registerHandler(IRQ.IRQ.EndIO, IOEndHandle(scheduler))
+        interruptionmanager.registerHandler(IRQ.IRQ.New, NewHandle(readyqueue))

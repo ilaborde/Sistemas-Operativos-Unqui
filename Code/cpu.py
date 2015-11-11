@@ -29,7 +29,7 @@ class Cpu(Thread):
                     return
 
                 if cell.type == InstructionType.cpu:
-                    print(cell.text)
+                    print(cell.text + ', pid: ' + str(self.currentPcb.pid))
 
                 elif cell.type == InstructionType.io:
                     self.interruptionManager.handle(IRQ(IRQ.IO, self.currentPcb))
