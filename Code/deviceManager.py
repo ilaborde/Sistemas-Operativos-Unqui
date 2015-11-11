@@ -5,6 +5,7 @@ class DeviceManager:
 
     def registerDevice(self, resourceType, device):
         self.devices[resourceType] = device
+        return self
 
     def pushToDeviceQueue(self, instruction, pcb):
         device = self.devices[instruction.resourceType]

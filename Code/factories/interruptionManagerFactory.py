@@ -19,8 +19,8 @@ class interruptionManagerFactory:
     def registryInterruptionManager(self, interruptionManager, deviceManager, scheduler, memory, readyQueue):
 
         interruptionManager.registerHandler(IRQ.IRQ.kill, KillHandle(scheduler))
-        interruptionManager.registerHandler(IRQ.IRQ.timeOut, TimeOutHandle())
-        interruptionManager.registerHandler(IRQ.IRQ.IO, IOHandle(deviceManager, memory))
+        interruptionManager.registerHandler(IRQ.IRQ.timeOut, TimeOutHandle(scheduler))
+        interruptionManager.registerHandler(IRQ.IRQ.IO, IOHandle(deviceManager, memory, scheduler))
         interruptionManager.registerHandler(IRQ.IRQ.EndIO, IOEndHandle(scheduler))
         interruptionManager.registerHandler(IRQ.IRQ.New, NewHandle(readyQueue))
 

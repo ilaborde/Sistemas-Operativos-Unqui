@@ -7,7 +7,6 @@ class DeviceManagerFactory:
         pass
 
     def createElement(self, resourceType, device):
-
         return DeviceManager().registerDevice(resourceType,device)
 
 

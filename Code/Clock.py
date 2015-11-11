@@ -11,9 +11,12 @@ class Clock(Thread):
         self.cpuList.append(cpu)
 
     def run(self):
+        print('initializing clock')
+        for cpu in self.cpuList:
+            cpu.start()
         while True:
-            time.sleep(1)
             self.tick()
+            time.sleep(1)
 
     def tick(self):
         for cpu in self.cpuList:

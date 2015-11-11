@@ -1,5 +1,5 @@
 class KillHandle:
-    def __init__(self,scheduler):
+    def __init__(self, scheduler):
         self.scheduler = scheduler
 
     def handle(self, irq):

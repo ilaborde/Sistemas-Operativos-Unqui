@@ -1,7 +1,7 @@
 make the app multithread
 create console app
 create tests +++++++++++++
-prioridad algoritmo
+prioridad algoritmo-- no hacerlo
 scheduler diferentes implementaciones
 use a factory to configure kernel (empezado)
 
@@ -18,6 +18,11 @@ threads:
     --shell(optativo)
     --kernel & interruption manager
     --device manager
+
+
+alejandrocastrounqui@gmail.com
+fernando.d.garcia@gmail.com
+juan@tondato.com
 
 
 

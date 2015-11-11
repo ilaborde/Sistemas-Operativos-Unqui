@@ -24,17 +24,28 @@ class kernelFactory:
 
     def configurationOne(self):
         program1 = Program()
-        program1.add(Instruction("Cpu Instruction..", InstructionType.cpu, ResourceType.Monitor))
+        program1.add(Instruction("Cpu Instruction1", InstructionType.cpu, ResourceType.Monitor))
+        program1.add(Instruction("Cpu Instruction2", InstructionType.cpu, ResourceType.Monitor))
+        program1.add(Instruction("Cpu Instruction3", InstructionType.cpu, ResourceType.Monitor))
+        program1.add(Instruction("Io Instruction1", InstructionType.io, ResourceType.Monitor))
+        program1.add(Instruction("Cpu Instruction4", InstructionType.cpu, ResourceType.Monitor))
+        program1.add(Instruction("Io Instruction2", InstructionType.io, ResourceType.Monitor))
         program1.add(Instruction("Kill Instruction.", InstructionType.kill, ResourceType.Monitor))
 
         program2 = Program()
-        program2.add(Instruction("Cpu Instruction..", InstructionType.cpu, ResourceType.Monitor))
+        program2.add(Instruction("Cpu Instruction6..", InstructionType.cpu, ResourceType.Monitor))
+        program2.add(Instruction("Cpu Instruction8..", InstructionType.cpu, ResourceType.Monitor))
+        program2.add(Instruction("Cpu Instruction9..", InstructionType.cpu, ResourceType.Monitor))
+        program2.add(Instruction("Io Instruction3", InstructionType.io, ResourceType.Monitor))
+        program2.add(Instruction("Io Instruction4", InstructionType.io, ResourceType.Monitor))
+        program2.add(Instruction("Cpu Instruction10..", InstructionType.cpu, ResourceType.Monitor))
+        program2.add(Instruction("Io Instruction5", InstructionType.io, ResourceType.Monitor))
         program2.add(Instruction("Kill Instruction.", InstructionType.kill, ResourceType.Monitor))
 
         InterruptionManagerFactory = interruptionManagerFactory()
         readyQueue = Queue()
         disk = diskFactory().createElement()
-        disk.writeProgram(program2)
+        disk.writeProgram(program1)
         disk.writeProgram(program2)
 
         memory = MemoryFactory().createElement()

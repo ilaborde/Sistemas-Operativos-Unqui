@@ -8,4 +8,4 @@ class SchedulerFactory:
 
     def createElement(self, cpu, queue):
 
-        return Scheduler(cpu,queue, 3)
+        return Scheduler(cpu,queue, 2)

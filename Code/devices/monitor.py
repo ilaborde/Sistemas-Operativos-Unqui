@@ -14,5 +14,6 @@ class Monitor:
     def processInstruction(self):
         pcb = self.queue.get()
         instruction = self.memory.get(pcb.pc + pcb.memoryPosition)
+        pcb.incrementPc()
         print(instruction.text)
         self.interruptionManager.handle(IRQ(IRQ.EndIO, pcb))

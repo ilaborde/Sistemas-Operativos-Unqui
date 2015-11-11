@@ -4,4 +4,4 @@ class IOEndHandle:
 
     def handle(self, irq):
         self.scheduler.addPcbToReadyQueue(irq.currentPcb)
-        print ("Processing of the instruction finished by the resource..")
+        print("Processing of the instruction finished by the resource..")

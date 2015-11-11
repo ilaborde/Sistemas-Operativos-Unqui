@@ -9,6 +9,7 @@ class Scheduler:
         self.currentReadyQueue = queue
         self.quantum = quantum
 
+
     def addPcbToReadyQueue(self, pcb):
         self.currentReadyQueue.put(pcb)
 

@@ -5,12 +5,13 @@ class PcbTable:
 
     def addpcb(self, pcb):
         if pcb.pid in self.pcbs:
-            raise ValueError("Critical error: Handle not found")
+            raise ValueError("There is a pid with the same number")
         else:
             self.pcbs[pcb.pid] = pcb
 
     def getnewpid(self):
-        return self.pids + 1
+        self.pids += 1
+        return  self.pids
 
     def removepcb(self, pid):
         self.pcbs[pid] = None
