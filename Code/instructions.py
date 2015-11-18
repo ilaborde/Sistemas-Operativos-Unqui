@@ -6,6 +6,7 @@ class InstructionType:
 
 class ResourceType:
     Monitor = 1
+    Printer= 2
 
 
 class Instruction:

@@ -25,6 +25,7 @@ class Cpu(Thread):
                 cell = self.memory.get(self.currentPcb.pc + self.currentPcb.memoryPosition)
                 if cell.type == InstructionType.kill:
                     # end of the program
+                    print(cell.text + ', pid: ' + str(self.currentPcb.pid))
                     self.interruptionManager.handle(IRQ(IRQ.kill, self.currentPcb))
                     return
 

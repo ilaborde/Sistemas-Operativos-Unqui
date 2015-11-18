@@ -1,4 +1,5 @@
 from queue import Queue
+from Code.devices.printer import Printer
 from Code.factories.clockFactory import ClockFactory
 from Code.factories.cpuFactory import CpuFactory
 from Code.factories.deviceManagerFactory import DeviceManagerFactory
@@ -25,21 +26,19 @@ class kernelFactory:
     def configurationOne(self):
         program1 = Program()
         program1.add(Instruction("Cpu Instruction1", InstructionType.cpu, ResourceType.Monitor))
-        program1.add(Instruction("Cpu Instruction2", InstructionType.cpu, ResourceType.Monitor))
-        program1.add(Instruction("Cpu Instruction3", InstructionType.cpu, ResourceType.Monitor))
-        program1.add(Instruction("Io Instruction1", InstructionType.io, ResourceType.Monitor))
-        program1.add(Instruction("Cpu Instruction4", InstructionType.cpu, ResourceType.Monitor))
         program1.add(Instruction("Io Instruction2", InstructionType.io, ResourceType.Monitor))
+        program1.add(Instruction("Cpu Instruction3", InstructionType.cpu, ResourceType.Monitor))
+        program1.add(Instruction("Io Instruction4", InstructionType.io, ResourceType.Printer))
+        program1.add(Instruction("Io Instruction5", InstructionType.io, ResourceType.Printer))
         program1.add(Instruction("Kill Instruction.", InstructionType.kill, ResourceType.Monitor))
 
         program2 = Program()
-        program2.add(Instruction("Cpu Instruction6..", InstructionType.cpu, ResourceType.Monitor))
-        program2.add(Instruction("Cpu Instruction8..", InstructionType.cpu, ResourceType.Monitor))
-        program2.add(Instruction("Cpu Instruction9..", InstructionType.cpu, ResourceType.Monitor))
-        program2.add(Instruction("Io Instruction3", InstructionType.io, ResourceType.Monitor))
-        program2.add(Instruction("Io Instruction4", InstructionType.io, ResourceType.Monitor))
-        program2.add(Instruction("Cpu Instruction10..", InstructionType.cpu, ResourceType.Monitor))
+        program2.add(Instruction("Cpu Instruction1..", InstructionType.cpu, ResourceType.Monitor))
+        program2.add(Instruction("Io Instruction2", InstructionType.io, ResourceType.Printer))
+        program1.add(Instruction("Io Instruction3", InstructionType.io, ResourceType.Printer))
+        program1.add(Instruction("Io Instruction4", InstructionType.io, ResourceType.Printer))
         program2.add(Instruction("Io Instruction5", InstructionType.io, ResourceType.Monitor))
+        program2.add(Instruction("Cpu Instruction6..", InstructionType.cpu, ResourceType.Monitor))
         program2.add(Instruction("Kill Instruction.", InstructionType.kill, ResourceType.Monitor))
 
         InterruptionManagerFactory = interruptionManagerFactory()
@@ -52,7 +51,13 @@ class kernelFactory:
         interruptionManager = InterruptionManagerFactory.createElement()
         cpu = CpuFactory().createElement(memory, interruptionManager)
         scheduler = SchedulerFactory().createElement(cpu, readyQueue, 2)
-        deviceManager = DeviceManagerFactory().createElement(ResourceType.Monitor, Monitor(interruptionManager, memory))
+        monitorDevice= Monitor(interruptionManager, memory)
+        printerDevice = Printer(interruptionManager, memory )
+        monitorDevice.start()
+        printerDevice.start()
+
+        deviceManager = DeviceManagerFactory().createElement(ResourceType.Monitor, monitorDevice)
+        deviceManager.registerDevice(ResourceType.Printer, printerDevice)
         InterruptionManagerFactory.registryInterruptionManager(interruptionManager, deviceManager, scheduler, memory,
                                                                readyQueue)
         clock = ClockFactory().createElement(cpu)

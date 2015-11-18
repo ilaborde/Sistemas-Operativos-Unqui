@@ -3,7 +3,7 @@ from threading import Thread
 from Code.devices.device import Device
 
 
-class Monitor(Device):
+class Printer(Device):
 
     def __init__(self, interruptionManager, memory):
        self.interruptionManager= interruptionManager
@@ -17,4 +17,6 @@ class Monitor(Device):
         while True:
           if (self.queue._qsize() > 0):
             self.processInstruction()
-            print ("Monitor is processing..")
+            print ("Printer is processing..")
+
+
