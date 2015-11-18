@@ -12,7 +12,7 @@ class Cpu(Thread):
         Thread.__init__(self)
 
     def run(self):
-            pass
+        Thread.run(self)
 
     def setPcb(self, pcb, quantum):
         self.currentPcb = pcb

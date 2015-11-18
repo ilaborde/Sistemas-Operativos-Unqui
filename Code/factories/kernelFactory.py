@@ -51,7 +51,7 @@ class kernelFactory:
         memory = MemoryFactory().createElement()
         interruptionManager = InterruptionManagerFactory.createElement()
         cpu = CpuFactory().createElement(memory, interruptionManager)
-        scheduler = SchedulerFactory().createElement(cpu, readyQueue)
+        scheduler = SchedulerFactory().createElement(cpu, readyQueue, 2)
         deviceManager = DeviceManagerFactory().createElement(ResourceType.Monitor, Monitor(interruptionManager, memory))
         InterruptionManagerFactory.registryInterruptionManager(interruptionManager, deviceManager, scheduler, memory,
                                                                readyQueue)

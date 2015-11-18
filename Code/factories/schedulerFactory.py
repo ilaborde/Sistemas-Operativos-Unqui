@@ -6,6 +6,6 @@ class SchedulerFactory:
     def __init__(self):
         pass
 
-    def createElement(self, cpu, queue):
+    def createElement(self, cpu, queue, quantum):
 
-        return Scheduler(cpu,queue, 2)
+        return Scheduler(cpu,queue, quantum)
