@@ -4,17 +4,25 @@ from threading import Thread
 class Kernel(Thread):
     def __init__(self):
         Thread.__init__(self)
-        pass
+        self.program = None
+        self.isFirstLoad= True
 
     def initializeKernel(self, clock, programloader, scheduler):
         self.programLoader = programloader
         self.scheduler = scheduler
         self.clock = clock
-        self.clock.start()
 
     def load(self, program):
-        self.programLoader.load(program)
+        self.program= program
 
     def run(self):
         Thread.run(self)
-        self.scheduler.setNextPcbToCpu()
+
+        while True:
+            if (not self.program == None):
+
+                self.isFirstLoad= len(self.programLoader.pcbTable.pcbs) == 0
+                self.programLoader.load(self.program)
+                if(self.isFirstLoad):
+                    self.scheduler.setNextPcbToCpu()
+                self.program= None

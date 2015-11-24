@@ -4,15 +4,21 @@ class Policies:
 
 
 class Scheduler:
-    def __init__(self, cpu, queue, quantum):
+    def __init__(self, cpu, queue, quantum, lockReadyQueue):
         self.currentCpu = cpu
         self.currentReadyQueue = queue
         self.quantum = quantum
-
+        self.lockReadyQueue= lockReadyQueue
 
     def addPcbToReadyQueue(self, pcb):
-        self.currentReadyQueue.put(pcb)
+        self.lockReadyQueue.acquire()
+        self.currentReadyQueue.put_nowait(pcb)
+        self.lockReadyQueue.release()
+
 
     def setNextPcbToCpu(self):
+        self.lockReadyQueue.acquire()
         if self.currentReadyQueue.qsize() > 0:
-            self.currentCpu.setPcb(self.currentReadyQueue.get(), self.quantum)
+            self.currentCpu.setPcb(self.currentReadyQueue.get_nowait(), self.quantum)
+        self.lockReadyQueue.release()
+

@@ -1,7 +1,7 @@
 from Code.deviceManager import DeviceManager
 
 
-class DeviceManagerFactory:
+class DeviceManagerBuilder:
 
     def __init__(self):
         pass

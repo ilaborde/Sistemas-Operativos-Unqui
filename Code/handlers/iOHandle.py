@@ -5,8 +5,13 @@ class IOHandle:
         self.scheduler = scheduler
 
     def handle(self, irq):
+
         self.scheduler.currentCpu.currentPcb = None
         self.scheduler.setNextPcbToCpu()
         instruction = self.memory.get(irq.currentPcb.pc + irq.currentPcb.memoryPosition)
         self.deviceManager.pushToDeviceQueue(instruction,irq.currentPcb)
+
+
+
+
 

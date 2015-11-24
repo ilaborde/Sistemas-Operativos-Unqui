@@ -7,16 +7,17 @@ from Code.handlers.timeOutHandle import TimeOutHandle
 from Code.interruptionManager import InterruptionManager
 
 
-class interruptionManagerFactory:
+class interruptionManagerBuilder:
     def __init__(self):
         pass
 
-    def createElement(self):
-        return InterruptionManager()
+    def createElement(self, lock, lockIrq):
+        return InterruptionManager(lock, lockIrq)
 
-    def registryInterruptionManager(self, interruptionmanager, devicenanager, scheduler, memory, readyqueue):
-        interruptionmanager.registerHandler(IRQ.IRQ.kill, KillHandle(scheduler))
+    def registryInterruptionManager(self, interruptionmanager, devicenanager, scheduler, memory, readyqueue, lockReadyQueue, pcbTable):
+
+        interruptionmanager.registerHandler(IRQ.IRQ.kill, KillHandle(scheduler, pcbTable))
         interruptionmanager.registerHandler(IRQ.IRQ.timeOut, TimeOutHandle(scheduler))
         interruptionmanager.registerHandler(IRQ.IRQ.IO, IOHandle(devicenanager, memory, scheduler))
         interruptionmanager.registerHandler(IRQ.IRQ.EndIO, IOEndHandle(scheduler))
-        interruptionmanager.registerHandler(IRQ.IRQ.New, NewHandle(readyqueue))
+        interruptionmanager.registerHandler(IRQ.IRQ.New, NewHandle(readyqueue, lockReadyQueue))
