@@ -14,5 +14,4 @@ class Memory:
         self.lockInstructions.acquire()
         cell= self.cells[index]
         self.lockInstructions.release()
-
         return cell

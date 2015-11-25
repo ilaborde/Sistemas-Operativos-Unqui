@@ -11,8 +11,8 @@ class interruptionManagerBuilder:
     def __init__(self):
         pass
 
-    def createElement(self, lock, lockIrq):
-        return InterruptionManager(lock, lockIrq)
+    def createElement(self, lock, lockProcessing, irqQueue, lockIrqQueue):
+        return InterruptionManager(lock, lockProcessing, irqQueue, lockIrqQueue)
 
     def registryInterruptionManager(self, interruptionmanager, devicenanager, scheduler, memory, readyqueue, lockReadyQueue, pcbTable):
 

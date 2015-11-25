@@ -30,6 +30,9 @@ class kernelFactory:
         lockIrq= Condition()
         lockPcb= Condition()
         pcbTable= PcbTable()
+        irqQueue= Queue()
+        lockIrqQueue= Condition()
+        lockProcessing= Condition()
 
         program1 = Program()
         program1.add(Instruction("Cpu Instruction1", InstructionType.cpu, ResourceType.Monitor))
@@ -73,9 +76,9 @@ class kernelFactory:
         disk.writeProgram(program3)
 
         memory = MemoryFactory().createElement(lockInstructions)
-        interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockIrq)
+        interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue, lockIrqQueue)
 
-        cpu = CpuBuilder().createElement(memory, interruptionManager, lockPcb)
+        cpu = CpuBuilder().createElement(memory, interruptionManager, lockPcb, irqQueue, lockIrqQueue)
         scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 2, lockReadyQueue)
         monitorDevice= Monitor(interruptionManager, memory)
         printerDevice = Printer(interruptionManager, memory )
@@ -87,8 +90,8 @@ class kernelFactory:
         InterruptionManagerBuilder.registryInterruptionManager(interruptionManager, deviceManager, scheduler, memory,
                                                                readyQueue, lockReadyQueue, pcbTable)
         interruptionManager.start()
-        clock = ClockBuilder().createElement(cpu)
-        programLoader = ProgramLoaderBuilder().createElement(disk, memory, interruptionManager,pcbTable , lockIrq)
+        clock = ClockBuilder().createElement(cpu, lockProcessing)
+        programLoader = ProgramLoaderBuilder().createElement(disk, memory, interruptionManager,pcbTable , lockIrqQueue)
         clock.start()
         deviceManager.start()
         kernel = Kernel()

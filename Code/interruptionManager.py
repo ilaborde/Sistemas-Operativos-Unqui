@@ -1,12 +1,16 @@
 from threading import Thread
+import time
+
 
 class InterruptionManager(Thread):
-    def __init__(self, lockReadyQueue, lockIrq):
+    def __init__(self, lockReadyQueue, lockProcessing, irqQueue, lockIrqQueue):
         self.handles = {}
         Thread.__init__(self)
         self.irq = None
         self.lockReadyQueue= lockReadyQueue
-        self.lockIrq= lockIrq
+        self.lockProcessing= lockProcessing
+        self.lockIrqQueue= lockIrqQueue
+        self.irqQueue= irqQueue
 
     def registerHandler(self, irqKey, handle):
         self.handles[irqKey] = handle
@@ -16,17 +20,20 @@ class InterruptionManager(Thread):
 
         while True:
 
-            if (not self.irq == None):
-                handler = self.handles[self.irq.type]
+            if (not self.irqQueue.qsize() == 0):
+                self.lockProcessing.acquire()
+                irq= self.irqQueue.get_nowait()
+                handler = self.handles[irq.type]
                 if handler is not None:
-                    self.lockIrq.acquire()
-                    handler.handle(self.irq)
-                    self.lockIrq.notifyAll()
-                    self.lockIrq.release()
+                    self.lockIrqQueue.acquire()
+                    handler.handle(irq)
+                    self.lockIrqQueue.notifyAll()
+                    self.lockIrqQueue.release()
                     self.irq= None
                 else:
                     raise ValueError("Critical error: Handle not found")
-
+                self.lockProcessing.release()
+                time.sleep(0.5)
     def handle(self, irq):
-         self.irq = irq
+         self.irqQueue.put_nowait(irq)
 

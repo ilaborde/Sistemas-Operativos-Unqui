@@ -5,7 +5,7 @@ class CpuBuilder:
     def __init__(self):
         pass
 
-    def createElement(self, memory, interruptionManager, lockPcb):
+    def createElement(self, memory, interruptionManager, lockpcb, irqQueue, lockIrqQueue):
 
-        cpu= Cpu(memory, interruptionManager, lockPcb)
+        cpu= Cpu(memory, interruptionManager, lockpcb, irqQueue, lockIrqQueue)
         return cpu

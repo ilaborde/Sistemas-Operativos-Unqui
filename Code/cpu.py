@@ -4,12 +4,15 @@ from Code.instructions import InstructionType
 
 
 class Cpu(Thread):
-    def __init__(self, memory, interruptionmanager, lockPcb):
+
+    def __init__(self, memory, interruptionmanager, lockPcb, irqQueue, lockIrqQueue):
         self.memory = memory
         self.interruptionManager = interruptionmanager
         self.currentPcb = None
         self.quantum = 0
         self.lockPcb= lockPcb
+        self.lockIrqQueue= lockIrqQueue
+        self.irqQueue= irqQueue
         Thread.__init__(self)
 
     def run(self):
@@ -32,20 +35,26 @@ class Cpu(Thread):
             if cell.type == InstructionType.kill:
                 # end of the program
                 print(cell.text + ', pid: ' + str(self.currentPcb.pid))
+                self.lockIrqQueue.acquire()
                 self.interruptionManager.handle(IRQ(IRQ.kill, self.currentPcb))
+                self.lockIrqQueue.release()
                 return
 
             if cell.type == InstructionType.cpu:
                 print(cell.text + ', pid: ' + str(self.currentPcb.pid))
 
             if cell.type == InstructionType.io:
+                self.lockIrqQueue.acquire()
                 self.interruptionManager.handle(IRQ(IRQ.IO, self.currentPcb))
+                self.lockIrqQueue.release()
                 return
 
             self.currentPcb.incrementPc()
             self.quantum -= 1
-
+       self.lockIrqQueue.acquire()
        self.interruptionManager.handle(IRQ(IRQ.timeOut, self.currentPcb))
+       self.lockIrqQueue.release()
+
 
 
 
