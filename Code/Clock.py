@@ -20,6 +20,7 @@ class Clock(Thread):
         while True:
             self.lockProcessing.acquire()
             self.tick()
+            self.lockProcessing.wait()
             self.lockProcessing.release()
             time.sleep(0.5)
 

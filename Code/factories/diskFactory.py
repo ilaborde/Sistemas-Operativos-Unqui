@@ -7,5 +7,4 @@ class diskFactory:
         pass
 
     def createElement(self):
-
         return Disk()

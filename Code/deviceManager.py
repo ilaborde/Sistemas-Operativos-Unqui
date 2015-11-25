@@ -1,4 +1,5 @@
 from threading import Thread
+import time
 from Code.instructions import InstructionType
 
 

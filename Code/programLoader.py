@@ -11,6 +11,7 @@ class ProgramLoader:
         self.lockIrq= lockIrq
 
     def load(self, programname):
+        #create pcb and trigger the new handle interruption
         self.lockIrq.acquire()
         program = self.disk.getProgram(programname)
         pcb = self.createPcb(program)
@@ -21,6 +22,7 @@ class ProgramLoader:
         self.lockIrq.release()
 
     def createPcb(self, program):
+        #create a pcb and loads the program in memory
         initialposition = self.memory.put(program.instructions)
         pid = self.pcbTable.getnewpid()
         return Pcb(initialposition, pid, len(program.instructions))

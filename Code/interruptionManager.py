@@ -16,6 +16,7 @@ class InterruptionManager(Thread):
         self.handles[irqKey] = handle
 
     def run(self):
+        #handle the irq and switches to kernel mode
         Thread.run(self)
 
         while True:
@@ -29,11 +30,13 @@ class InterruptionManager(Thread):
                     handler.handle(irq)
                     self.lockIrqQueue.notifyAll()
                     self.lockIrqQueue.release()
-                    self.irq= None
                 else:
                     raise ValueError("Critical error: Handle not found")
+                self.lockProcessing.notifyAll()
                 self.lockProcessing.release()
                 time.sleep(0.5)
+
     def handle(self, irq):
+        #add element to irqQueue
          self.irqQueue.put_nowait(irq)
 

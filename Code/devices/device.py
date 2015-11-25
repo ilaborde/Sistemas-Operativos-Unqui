@@ -16,7 +16,7 @@ class Device(Thread):
         self.queue.put(pcb)
 
     def processInstruction(self):
-
+        # process a instruction and trigger the interruption
         try:
             pcb = self.queue.get_nowait()
             instruction = self.memory.get(pcb.pc + pcb.memoryPosition)

@@ -25,9 +25,10 @@ class kernelFactory:
             return self.configurationOne()
 
     def configurationOne(self):
+        #create some configuration for kernel
+
         lockReadyQueue= Condition()
         lockInstructions= Condition()
-        lockIrq= Condition()
         lockPcb= Condition()
         pcbTable= PcbTable()
         irqQueue= Queue()
@@ -79,7 +80,7 @@ class kernelFactory:
         interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue, lockIrqQueue)
 
         cpu = CpuBuilder().createElement(memory, interruptionManager, lockPcb, irqQueue, lockIrqQueue)
-        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 2, lockReadyQueue)
+        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 1, lockReadyQueue)
         monitorDevice= Monitor(interruptionManager, memory)
         printerDevice = Printer(interruptionManager, memory )
         monitorDevice.start()
