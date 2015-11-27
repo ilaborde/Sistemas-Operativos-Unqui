@@ -11,6 +11,7 @@ class DeviceManager(Thread):
         Thread.__init__(self)
 
     def registerDevice(self, resourceType, device):
+        #Registry devices into the device manager like a monitor, printer, etc
         self.devices[resourceType] = device
         return self
 

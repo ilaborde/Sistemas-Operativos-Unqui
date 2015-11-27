@@ -13,9 +13,6 @@ class Clock(Thread):
 
     def run(self):
         print('initializing clock')
-        for cpu in self.cpuList:
-           cpu.daemon= True
-           cpu.start()
 
         while True:
             self.lockProcessing.acquire()

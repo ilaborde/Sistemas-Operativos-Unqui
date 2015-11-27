@@ -6,6 +6,7 @@ class Disk:
         self.programs = {}
 
     def writeProgram(self, program):
+        #Sets the program into the disk to store ir
         self.programs["program" + str(len(self.programs))] = program
 
     def getProgram(self, programName):

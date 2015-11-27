@@ -11,12 +11,14 @@ class Scheduler:
         self.lockReadyQueue= lockReadyQueue
 
     def addPcbToReadyQueue(self, pcb):
+        #Add a pcb into the ready queue for cpu processing
         self.lockReadyQueue.acquire()
         self.currentReadyQueue.put_nowait(pcb)
         self.lockReadyQueue.release()
 
 
     def setNextPcbToCpu(self):
+        #Sets the next pcb to the cpu if the readyQueue isn`t empty
         self.lockReadyQueue.acquire()
         if self.currentReadyQueue.qsize() > 0:
             self.currentCpu.setPcb(self.currentReadyQueue.get_nowait(), self.quantum)

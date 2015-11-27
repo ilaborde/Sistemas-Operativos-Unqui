@@ -3,7 +3,7 @@ from Code.IRQ import IRQ
 from Code.instructions import InstructionType
 
 
-class Cpu(Thread):
+class Cpu():
 
     def __init__(self, memory, interruptionmanager, lockPcb, irqQueue, lockIrqQueue):
         self.memory = memory
@@ -13,17 +13,15 @@ class Cpu(Thread):
         self.lockPcb= lockPcb
         self.lockIrqQueue= lockIrqQueue
         self.irqQueue= irqQueue
-        Thread.__init__(self)
-
-    def run(self):
-        Thread.run(self)
 
     def setPcb(self, pcb, quantum):
+        #Set a quantum and a pcb into cpu to process it
+
         self.currentPcb = pcb
         self.quantum = quantum
 
     def fetch(self):
-
+        #Process the pcb when the clock calls this method of the cpu
         if self.currentPcb is not None:
             self.processPcb()
 

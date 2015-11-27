@@ -15,7 +15,6 @@ def console():
 if __name__ == '__main__':
 
     kernel = kernelFactory().selectConfiguration(1)
-
     #mock shell
     console()
 

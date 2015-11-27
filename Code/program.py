@@ -3,5 +3,6 @@ class Program:
         self.instructions = []
 
     def add(self, instruction):
+        #Add instructions into the program
         self.instructions.append(instruction)
 

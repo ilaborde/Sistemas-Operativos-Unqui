@@ -13,6 +13,7 @@ class Kernel(Thread):
         self.clock = clock
 
     def load(self, program):
+        #Sets a program that the program loader will load to the memory
         self.program= program
 
     def run(self):

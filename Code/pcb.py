@@ -7,5 +7,6 @@ class Pcb:
         self.programLength = count
     
     def incrementPc(self):
+        #Increment program counter in order to goes to the next instruction of the program
         self.pc += 1
 
