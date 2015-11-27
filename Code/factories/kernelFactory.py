@@ -53,10 +53,13 @@ class kernelFactory:
         deviceManager = DeviceManagerBuilder().createElement(ResourceType.Monitor, monitorDevice)
         deviceManager.registerDevice(ResourceType.Printer, printerDevice)
         InterruptionManagerBuilder.registryInterruptionManager(interruptionManager, deviceManager, scheduler, memory,
-                                                               readyQueue, lockReadyQueue, pcbTable)
+                                                             readyQueue, lockReadyQueue, pcbTable)
+
         interruptionManager.start()
         clock = ClockBuilder().createElement(cpu, lockProcessing)
         programLoader = ProgramLoaderBuilder().createElement(disk, memory, interruptionManager,pcbTable , lockIrqQueue)
+
+        clock.setDaemon(True)
         clock.start()
         deviceManager.start()
         kernel = Kernel()
