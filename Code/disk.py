@@ -10,4 +10,4 @@ class Disk:
         self.programs["program" + str(len(self.programs))] = program
 
     def getProgram(self, programName):
-        return self.programs[programName]
+        return self.programs.get(programName,None)

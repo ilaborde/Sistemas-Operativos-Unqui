@@ -12,14 +12,17 @@ class ProgramLoader:
 
     def load(self, programname):
         #create pcb and trigger the new handle interruption
-        self.lockIrq.acquire()
         program = self.disk.getProgram(programname)
-        pcb = self.createPcb(program)
-        self.pcbTable.addpcb(pcb)
-        irq = IRQ(IRQ.New, pcb)
-        self.interruptionManager.handle(irq)
-        self.lockIrq.wait()
-        self.lockIrq.release()
+        if program is not None:
+            self.lockIrq.acquire()
+            pcb = self.createPcb(program)
+            self.pcbTable.addpcb(pcb)
+            irq = IRQ(IRQ.New, pcb)
+            self.interruptionManager.handle(irq)
+            self.lockIrq.wait()
+            self.lockIrq.release()
+        else:
+            print ("Program not found")
 
     def createPcb(self, program):
         #create a pcb and loads the program in memory
