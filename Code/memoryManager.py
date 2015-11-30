@@ -19,9 +19,9 @@ class MemoryManager:
 
       self.registryPageTableForPcb(pcb, newPageTable)
 
-    def putDataInBlockEmpty(self, instruction):
+    def getBlockMemoryEmpty(self):
         count= 0
         while count < len(self.memory.cells):
             if self.memory.cells[count].isEmpty:
-               self.memory.putData(instruction, count)
-               return;
+               return self.memory.cells[count]
+        return None
