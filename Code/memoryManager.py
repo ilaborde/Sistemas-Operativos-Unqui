@@ -7,17 +7,18 @@ class MemoryManager:
     def registryPageTableForPcb(self, pcb, pageTable):
         self.pageTableDictionary[pcb] = pageTable
 
-    def createPageTableForPcb(self, program, pcb):
-      newPageTable= []
-      pageIndex= 0
-      count= 0
+    def createPageTableForPcb(self, pcb):
+        newPageTable= []
+        self.registryPageTableForPcb(pcb, newPageTable)
 
-      while len(program.instructions) > count:
-          newPageTable[pageIndex] = "1"
-          pageIndex += 1
-          count += 1
+    def addFramesToPageTable(self, instruction, pcb):
+        pageTableToAdd= self.pageTableDictionary[pcb]
+        blockToAddData= self.getBlockMemoryEmpty()
 
-      self.registryPageTableForPcb(pcb, newPageTable)
+        if not blockToAddData == None:
+          pageTableToAdd[len(pageTableToAdd)] = "1" #TODO Calculate markNumber
+          blockToAddData.putData(instruction)
+          self.registryPageTableForPcb(pcb, pageTableToAdd)
 
     def getBlockMemoryEmpty(self):
         count= 0
