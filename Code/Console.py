@@ -1,4 +1,4 @@
-from Tools.Scripts.treesync import raw_input
+from Tools.scripts.treesync import raw_input
 
 
 class Console:
@@ -7,6 +7,9 @@ class Console:
         commandList = ['1','2','4','5']
 
     def start(self,kernel):
+        kernel.load("program0")
+        kernel.load("program1")
+
         while True:
             # print("Enter a command")
             # x = input("program: ")

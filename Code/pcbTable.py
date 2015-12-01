@@ -11,7 +11,7 @@ class PcbTable:
 
     def getnewpid(self):
         self.pids += 1
-        return  self.pids
+        return self.pids
 
     def removepcb(self, pid):
         self.pcbs.__delitem__(pid)

@@ -44,7 +44,7 @@ class kernelFactory:
         interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue, lockIrqQueue)
 
         cpu = CpuBuilder().createElement(memory, interruptionManager, lockPcb, irqQueue, lockIrqQueue)
-        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 1, lockReadyQueue)
+        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 2, lockReadyQueue)
         monitorDevice= Monitor(interruptionManager, memory)
         printerDevice = Printer(interruptionManager, memory )
         monitorDevice.start()
@@ -60,6 +60,7 @@ class kernelFactory:
         programLoader = ProgramLoaderBuilder().createElement(disk, memory, interruptionManager,pcbTable , lockIrqQueue)
 
         clock.setDaemon(True)
+
         clock.start()
         deviceManager.start()
         kernel = Kernel()

@@ -23,7 +23,7 @@ class Kernel(Thread):
 
         while True:
             if not self.programsQueue.qsize() == 0:
-                program = self.programsQueue.get_nowait()
+                program = self.programsQueue.get()
                 self.isFirstLoad = len(self.programLoader.pcbTable.pcbs) == 0
                 self.programLoader.load(program)
                 if self.isFirstLoad:

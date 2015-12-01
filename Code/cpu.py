@@ -3,7 +3,7 @@ from Code.IRQ import IRQ
 from Code.instructions import InstructionType
 
 
-class Cpu():
+class Cpu:
 
     def __init__(self, memory, interruptionmanager, lockPcb, irqQueue, lockIrqQueue):
         self.memory = memory
