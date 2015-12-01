@@ -24,7 +24,7 @@ class MemoryPaging:
 
     def __init__(self, lockInstructions):
         self.cells = []
-        self.lockInstructions= lockInstructions
+        self.lockInstructions = lockInstructions
 
     def initializeMemory(self, memoryCapacity):
 
@@ -38,7 +38,7 @@ class MemoryPaging:
         self.lockInstructions.release()
 
     def get(self, index):
-        #Obtain a instruction contained in the cell of the memory
+        #get a instruction contained in the cell of the memory
         self.lockInstructions.acquire()
         cell= self.cells[index]
         self.lockInstructions.release()
