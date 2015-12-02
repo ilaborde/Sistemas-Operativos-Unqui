@@ -28,4 +28,3 @@ class Kernel(Thread):
                 self.programLoader.load(program)
                 if self.isFirstLoad:
                     self.scheduler.setNextPcbToCpu()
-                time.sleep(0.1)

@@ -5,5 +5,5 @@ class NewHandle:
 
     def handle(self, irq):
         self.lock.acquire()
-        self.readyQueue.put_nowait(irq.currentPcb)
+        self.readyQueue.put(irq.currentPcb)
         self.lock.release()

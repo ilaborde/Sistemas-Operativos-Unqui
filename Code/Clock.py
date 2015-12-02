@@ -8,6 +8,7 @@ class Clock(Thread):
         Thread.__init__(self)
         self.lockProcessing= lockProcessing
 
+
     def registrycpu(self, cpu):
         self.cpuList.append(cpu)
 
@@ -16,8 +17,8 @@ class Clock(Thread):
 
         while True:
             self.lockProcessing.acquire()
-            self.tick()
-            self.lockProcessing.wait()
+            if (self.tick()):
+                self.lockProcessing.wait()
             self.lockProcessing.release()
             time.sleep(0.5)
 

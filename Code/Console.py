@@ -1,5 +1,3 @@
-from tkinter import font, Text, Tk, INSERT, END
-from Tools.scripts.treesync import raw_input
 from threading import Thread
 
 
@@ -18,7 +16,7 @@ class Console(Thread):
 
         while True:
 
-              command = raw_input('Enter a command: ').strip().lower()
+              command = input('Enter a command: ').strip().lower()
               com = command.split()
               if com[0] == 'exec':
                  self.kernel.load(com[1])

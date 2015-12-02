@@ -23,20 +23,20 @@ class InterruptionManager(Thread):
 
             if (not self.irqQueue.qsize() == 0):
                 self.lockProcessing.acquire()
+                self.lockIrqQueue.acquire()
                 irq= self.irqQueue.get_nowait()
                 handler = self.handles[irq.type]
                 if handler is not None:
-                    self.lockIrqQueue.acquire()
                     handler.handle(irq)
-                    self.lockIrqQueue.notifyAll()
-                    self.lockIrqQueue.release()
                 else:
                     raise ValueError("Critical error: Handle not found")
+                self.lockIrqQueue.notifyAll()
+                self.lockIrqQueue.release()
                 self.lockProcessing.notifyAll()
                 self.lockProcessing.release()
                 time.sleep(0.5)
 
     def handle(self, irq):
         #add element to irqQueue
-         self.irqQueue.put(irq)
+         self.irqQueue.put_nowait(irq)
 

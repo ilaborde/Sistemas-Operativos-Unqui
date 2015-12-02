@@ -14,9 +14,7 @@ class Memory:
 
     def get(self, index):
         #Obtain a instruction contained in the cell of the memory
-        self.lockInstructions.acquire()
         cell= self.cells[index]
-        self.lockInstructions.release()
         return cell
 
 
