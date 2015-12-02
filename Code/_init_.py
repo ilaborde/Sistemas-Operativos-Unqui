@@ -6,3 +6,4 @@ if __name__ == '__main__':
     console = Console()
     # mock shell
     console.start(kernel)
+    console.run()

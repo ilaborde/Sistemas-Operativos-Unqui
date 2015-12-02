@@ -38,5 +38,5 @@ class InterruptionManager(Thread):
 
     def handle(self, irq):
         #add element to irqQueue
-         self.irqQueue.put_nowait(irq)
+         self.irqQueue.put(irq)
 

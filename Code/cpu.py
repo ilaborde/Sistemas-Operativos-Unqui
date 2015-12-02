@@ -33,25 +33,26 @@ class Cpu:
             if cell.type == InstructionType.kill:
                 # end of the program
                 print(cell.text + ', pid: ' + str(self.currentPcb.pid))
-                self.lockIrqQueue.acquire()
+
                 self.interruptionManager.handle(IRQ(IRQ.kill, self.currentPcb))
-                self.lockIrqQueue.release()
+
                 return
 
             if cell.type == InstructionType.cpu:
                 print(cell.text + ', pid: ' + str(self.currentPcb.pid))
 
             if cell.type == InstructionType.io:
-                self.lockIrqQueue.acquire()
+
+
                 self.interruptionManager.handle(IRQ(IRQ.IO, self.currentPcb))
-                self.lockIrqQueue.release()
+
                 return
 
             self.currentPcb.incrementPc()
             self.quantum -= 1
-       self.lockIrqQueue.acquire()
+
        self.interruptionManager.handle(IRQ(IRQ.timeOut, self.currentPcb))
-       self.lockIrqQueue.release()
+
 
 
 

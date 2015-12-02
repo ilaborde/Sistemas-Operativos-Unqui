@@ -1,28 +1,38 @@
+from tkinter import font, Text, Tk, INSERT, END
 from Tools.scripts.treesync import raw_input
+from threading import Thread
 
 
-class Console:
+class Console(Thread):
 
     def __init__(self):
         commandList = ['1','2','4','5']
+        Thread.__init__(self)
+        self.kernel= None
 
-    def start(self,kernel):
-        kernel.load("program0")
-        kernel.load("program1")
+    def start(self, kernel):
+        self.kernel= kernel
+
+    def run(self):
+        Thread.run(self)
 
         while True:
-            # print("Enter a command")
-            # x = input("program: ")
-            # kernel.load(x)
-            command = raw_input('Enter a command: ').strip().lower()
-            com = command.split()
-            if com[0] == 'exec':
-                kernel.load(com[1])
-            elif com[0] == 'list':
+
+              command = raw_input('Enter a command: ').strip().lower()
+              com = command.split()
+              if com[0] == 'exec':
+                 self.kernel.load(com[1])
+              elif com[0] == 'list':
                 print('Doing something else')
-            elif com[0] == 'quit':
+              elif com[0] == 'quit':
                 print('shutting down...')
                 quit()
-            else:
+              else:
                 print('Invalid Command.')
+
+
+
+
+
+
 

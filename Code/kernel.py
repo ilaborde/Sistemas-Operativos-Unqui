@@ -16,14 +16,14 @@ class Kernel(Thread):
 
     def load(self, program):
         # Sets a program that the program loader will load to the memory
-        self.programsQueue.put(program)
+        self.programsQueue.put_nowait(program)
 
     def run(self):
         Thread.run(self)
 
         while True:
             if not self.programsQueue.qsize() == 0:
-                program = self.programsQueue.get()
+                program = self.programsQueue.get_nowait()
                 self.isFirstLoad = len(self.programLoader.pcbTable.pcbs) == 0
                 self.programLoader.load(program)
                 if self.isFirstLoad:
