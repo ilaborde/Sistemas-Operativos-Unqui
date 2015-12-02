@@ -1,6 +1,3 @@
-from Code.memoryBlock import memoryBlock
-
-
 class Memory:
     def __init__(self, lockInstructions):
         self.cells = []
@@ -18,29 +15,6 @@ class Memory:
         return cell
 
 
-class MemoryPaging:
-
-    def __init__(self, lockInstructions):
-        self.cells = []
-        self.lockInstructions = lockInstructions
-
-    def initializeMemory(self, memoryCapacity):
-
-        for physicalMemoryDirection in range(memoryCapacity):
-            self.cells[physicalMemoryDirection] = memoryBlock()
-
-    def putData(self, instruction, index):
-        # add instructions to the list and returns the program index
-        self.lockInstructions.acquire()
-        self.cells[index].putData(instruction)
-        self.lockInstructions.release()
-
-    def get(self, index):
-        #get a instruction contained in the cell of the memory
-        self.lockInstructions.acquire()
-        cell= self.cells[index]
-        self.lockInstructions.release()
-        return cell.getData()
 
 
 
