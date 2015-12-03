@@ -11,11 +11,12 @@ class TestsClock(unittest.TestCase):
         self.lockPcbMock =Mock()
         self.irqQueueMock =Mock()
         self.lockIrqQueueMock = Mock()
+        self.lockInstruction= Mock()
 
     def test_when_registry_cpu_then_verify_registry_list_is_incremented(self):
         self.memory = Mock()
         self.interruptionManagerMock = Mock()
-        cpu = Cpu(self.memory, self.interruptionManagerMock, self.lockPcbMock,self.irqQueueMock, self.lockIrqQueueMock)
+        cpu = Cpu(self.memory, self.interruptionManagerMock, self.lockPcbMock,self.irqQueueMock, self.lockIrqQueueMock, self.lockInstruction)
 
         clock = Clock(self.lockProcessingMock)
         clock.registrycpu(cpu)

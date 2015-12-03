@@ -11,4 +11,4 @@ class TestsPcb(unittest.TestCase):
         pcb = Pcb(0, 0, 0)
         pcb.incrementPc()
         self.assertEqual(pcb.pc, 1)
-        pass
+

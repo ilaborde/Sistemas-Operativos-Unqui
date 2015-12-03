@@ -18,7 +18,7 @@ class TestsCpu(unittest.TestCase):
         self.lockPcbMock =Mock()
         self.irqQueueMock =Mock()
         self.lockIrqQueueMock = Mock()
-        self.cpu = Cpu(self.memory, self.interruptionManagerMock, self.lockPcbMock, self.irqQueueMock, self.lockIrqQueueMock)
+        self.cpu = Cpu(self.memory, self.interruptionManagerMock, self.lockPcbMock, self.irqQueueMock, self.lockIrqQueueMock, Mock())
 
     def test_when_fetch_end_of_program_then_call_kill_handler(self):
         instruction = Instruction("", InstructionType.kill, ResourceType.Monitor)

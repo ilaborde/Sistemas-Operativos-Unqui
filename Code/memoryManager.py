@@ -13,30 +13,13 @@ class MemoryManager:
         for i in range(0, int((len(memory.cells) / 4))):
             self.freeMemoryFrames.put(MemoryFrame(i + 1, 4, i))
 
-    # def registryPageTableForPcb(self, pcb, pageTable):
-    #     self.pageTableList[pcb.pid] = pageTable
-    #
-    # def createPageTableForPcb(self, pcb):
-    #     newPageTable= []
-    #     self.registryPageTableForPcb(pcb, newPageTable)
-    #
-    # def addPagesToPageTable(self, pcb):
-    #     pageTableToAdd= self.pageTableList[pcb.pid]
-    #
-    #     pageCount= pcb.programLength / 4
-    #     pageIndex = 0
-    #
-    #     while not pageCount == 0:
-    #         pageTableToAdd[pageIndex] = None
-    #         pageIndex += 1
-    #         pageCount -= 1
-    #
-    #     self.registryPageTableForPcb(pcb, pageTableToAdd)
-
-
     def loadToMemory(self, pcb, instructions):
         # calculate page count
-        pageCount = pcb.programLength / 4
+        if pcb.programLength // 4  == 0:
+            pageCount = pcb.programLength / 4
+        else:
+            pageCount = pcb.programLength // 4 + 1
+
         # get a free Frame
         frame = self.freeMemoryFrames.get()
         curretPageTable = {}
