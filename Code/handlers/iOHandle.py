@@ -6,8 +6,7 @@ class IOHandle:
 
     def handle(self, irq):
         self.scheduler.currentCpu.currentPcb = None
-        instruction = self.memory.get(irq.currentPcb.pc + irq.currentPcb.memoryPosition)
-        self.deviceManager.pushToDeviceQueue(instruction,irq.currentPcb)
+        self.deviceManager.pushToDeviceQueue(irq)
 
 
 

@@ -6,9 +6,10 @@ class IRQ:
     EndIO = 4
     New = 5
 
-    def __init__(self, irqtype, pcb):
+    def __init__(self, irqtype, pcb,instruction):
         self.type = irqtype
         self.currentPcb = pcb
+        self.instruction = instruction
 
     def compare(self, other):
         if not type(self) == type(other):

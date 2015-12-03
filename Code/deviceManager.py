@@ -6,7 +6,7 @@ from Code.instructions import InstructionType
 class DeviceManager(Thread):
     def __init__(self):
         self.devices = {}
-        self.pcbToQueue= None
+        self.irqToQueue= None
         self.currentDevice= None
         Thread.__init__(self)
 
@@ -20,15 +20,15 @@ class DeviceManager(Thread):
 
         while True:
 
-            if(not self.pcbToQueue == None):
-                self.currentDevice.pushToQueue(self.pcbToQueue)
-                self.pcbToQueue= None
+            if(not self.irqToQueue == None):
+                self.currentDevice.pushToQueue(self.irqToQueue)
+                self.irqToQueue= None
 
-    def pushToDeviceQueue(self, instruction, pcb):
+    def pushToDeviceQueue(self,irq):
 
-        device = self.devices[instruction.resourceType]
+        device = self.devices[irq.instruction.resourceType]
         if device is not None:
-            self.pcbToQueue= pcb
+            self.irqToQueue= irq
             self.currentDevice= device
         else:
             raise ValueError("Critical error: Device not found")

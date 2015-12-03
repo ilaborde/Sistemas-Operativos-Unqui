@@ -11,6 +11,7 @@ from Code.factories.schedulerBuilder import SchedulerBuilder
 from Code.devices.monitor import Monitor
 from Code.instructions import ResourceType, Instruction, InstructionType
 from Code.kernel import Kernel
+from Code.memoryManager import MemoryManager
 from Code.pcbTable import PcbTable
 from Code.program import Program
 from Code.factories.interruptionManagerBuilder import interruptionManagerBuilder
@@ -25,39 +26,43 @@ class kernelFactory:
             return self.configurationOne()
 
     def configurationOne(self):
-        #create some configuration for kernel
+        # create some configuration for kernel
 
-        lockReadyQueue= Condition()
-        lockInstructions= Condition()
-        lockPcb= Condition()
-        pcbTable= PcbTable()
-        irqQueue= Queue()
-        lockIrqQueue= Condition()
-        lockProcessing= Condition()
-
+        lockReadyQueue = Condition()
+        lockInstructions = Condition()
+        lockPcb = Condition()
+        pcbTable = PcbTable()
+        irqQueue = Queue()
+        lockIrqQueue = Condition()
+        lockProcessing = Condition()
 
         InterruptionManagerBuilder = interruptionManagerBuilder()
         readyQueue = Queue()
-        disk = diskFactory().configurationOfTheDiskWithTwoPrograms()
+        disk = diskFactory().configurationOfTheDiskWithThreePrograms()
 
         memory = MemoryFactory().createElement(lockInstructions)
-        interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue, lockIrqQueue)
+        memoryManager = MemoryManager(memory)
+        interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue,
+                                                                       lockIrqQueue)
 
-        cpu = CpuBuilder().createElement(memory, interruptionManager, lockPcb, irqQueue, lockIrqQueue, lockInstructions)
-        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 1, lockReadyQueue)
-        monitorDevice= Monitor(interruptionManager, memory, lockInstructions)
-        printerDevice = Printer(interruptionManager, memory, lockInstructions)
+        cpu = CpuBuilder().createElement(memoryManager, interruptionManager, lockPcb, irqQueue, lockIrqQueue, lockInstructions)
+        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 4, lockReadyQueue)
+        ##todo remove memory
+        monitorDevice = Monitor(interruptionManager, lockInstructions)
+        printerDevice = Printer(interruptionManager, lockInstructions)
         monitorDevice.start()
         printerDevice.start()
 
         deviceManager = DeviceManagerBuilder().createElement(ResourceType.Monitor, monitorDevice)
         deviceManager.registerDevice(ResourceType.Printer, printerDevice)
-        InterruptionManagerBuilder.registryInterruptionManager(interruptionManager, deviceManager, scheduler, memory,
-                                                             readyQueue, lockReadyQueue, pcbTable)
+        InterruptionManagerBuilder.registryInterruptionManager(interruptionManager, deviceManager, scheduler,
+                                                               memoryManager,
+                                                               readyQueue, lockReadyQueue, pcbTable)
 
         interruptionManager.start()
         clock = ClockBuilder().createElement(cpu, lockProcessing)
-        programLoader = ProgramLoaderBuilder().createElement(disk, memory, interruptionManager,pcbTable , lockIrqQueue)
+
+        programLoader = ProgramLoaderBuilder().createElement(disk, memoryManager, interruptionManager, pcbTable, lockIrqQueue)
 
         clock.setDaemon(True)
 

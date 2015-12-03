@@ -14,10 +14,10 @@ class interruptionManagerBuilder:
     def createElement(self, lock, lockProcessing, irqQueue, lockIrqQueue):
         return InterruptionManager(lock, lockProcessing, irqQueue, lockIrqQueue)
 
-    def registryInterruptionManager(self, interruptionmanager, devicenanager, scheduler, memory, readyqueue, lockReadyQueue, pcbTable):
+    def registryInterruptionManager(self, interruptionmanager, devicenanager, scheduler, memoryManager, readyqueue, lockReadyQueue, pcbTable):
 
         interruptionmanager.registerHandler(IRQ.IRQ.kill, KillHandle(scheduler, pcbTable))
         interruptionmanager.registerHandler(IRQ.IRQ.timeOut, TimeOutHandle(scheduler))
-        interruptionmanager.registerHandler(IRQ.IRQ.IO, IOHandle(devicenanager, memory, scheduler))
+        interruptionmanager.registerHandler(IRQ.IRQ.IO, IOHandle(devicenanager, memoryManager, scheduler))
         interruptionmanager.registerHandler(IRQ.IRQ.EndIO, IOEndHandle(scheduler))
-        interruptionmanager.registerHandler(IRQ.IRQ.New, NewHandle(readyqueue, lockReadyQueue))
+        interruptionmanager.registerHandler(IRQ.IRQ.New, NewHandle(readyqueue, lockReadyQueue,memoryManager))

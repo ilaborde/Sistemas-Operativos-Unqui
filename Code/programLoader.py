@@ -3,10 +3,10 @@ from Code.pcb import Pcb
 
 
 class ProgramLoader:
-    def __init__(self, disk, memory, interruptionmanager, pcbtable, lockIrq):
+    def __init__(self, disk, memoryManager, interruptionmanager, pcbtable, lockIrq):
         self.disk = disk
         self.interruptionManager = interruptionmanager
-        self.memory = memory
+        self.memoryManager = memoryManager
         self.pcbTable = pcbtable
         self.lockIrq= lockIrq
 
@@ -17,7 +17,8 @@ class ProgramLoader:
             self.lockIrq.acquire()
             pcb = self.createPcb(program)
             self.pcbTable.addpcb(pcb)
-            irq = IRQ(IRQ.New, pcb)
+            self.memoryManager.loadToMemory(pcb,program.instructions)
+            irq = IRQ(IRQ.New, pcb,None)
             self.interruptionManager.handle(irq)
             self.lockIrq.wait()
             self.lockIrq.release()
@@ -26,6 +27,5 @@ class ProgramLoader:
 
     def createPcb(self, program):
         #create a pcb and loads the program in memory
-        initialposition = self.memory.put(program.instructions)
         pid = self.pcbTable.getnewpid()
-        return Pcb(initialposition, pid, len(program.instructions))
+        return Pcb(pid, len(program.instructions))

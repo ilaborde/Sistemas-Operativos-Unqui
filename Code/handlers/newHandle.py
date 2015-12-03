@@ -1,7 +1,8 @@
 class NewHandle:
-    def __init__(self, readyQueue, lock):
+    def __init__(self, readyQueue, lock, memoryManager):
         self.readyQueue = readyQueue
         self.lock= lock
+        self.memoryManager = memoryManager
 
     def handle(self, irq):
         self.lock.acquire()

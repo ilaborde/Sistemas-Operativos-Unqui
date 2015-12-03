@@ -13,20 +13,21 @@ class Console(Thread):
 
     def run(self):
         Thread.run(self)
+        self.kernel.load("program0")
 
-        while True:
-
-              command = input('Enter a command: ').strip().lower()
-              com = command.split()
-              if com[0] == 'exec':
-                 self.kernel.load(com[1])
-              elif com[0] == 'list':
-                print('Doing something else')
-              elif com[0] == 'quit':
-                print('shutting down...')
-                quit()
-              else:
-                print('Invalid Command.')
+        # while True:
+        #
+        #       command = input('Enter a command: ').strip().lower()
+        #       com = command.split()
+        #       if com[0] == 'exec':
+        #          self.kernel.load(com[1])
+        #       elif com[0] == 'list':
+        #         print('Doing something else')
+        #       elif com[0] == 'quit':
+        #         print('shutting down...')
+        #         quit()
+        #       else:
+        #         print('Invalid Command.')
 
 
 

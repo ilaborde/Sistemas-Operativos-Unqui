@@ -1,13 +1,6 @@
-class memoryFrame:
+class MemoryFrame:
 
-    def __init__(self,id, markSize):
-        self.instructions = {}
+    def __init__(self, id, markSize, addressBase):
         self.markSize = markSize
-        self.id = 0
-
-    def getData(self):
-        return self.data
-
-    def putInstruction(self, instruction):
-        if len(self.instructions) < self.markSize:
-            self.instructions.append(instruction)
+        self.id = id
+        self.addressBase = addressBase

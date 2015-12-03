@@ -6,8 +6,8 @@ from Code.devices.device import Device
 
 class Printer(Device):
 
-    def __init__(self, interruptionManager, memory, lockInstructions):
-       Device.__init__(self, interruptionManager, memory, Queue(), lockInstructions)
+    def __init__(self, interruptionManager, lockInstructions):
+       Device.__init__(self, interruptionManager, Queue(), lockInstructions)
        Thread.__init__(self)
 
     def run(self):

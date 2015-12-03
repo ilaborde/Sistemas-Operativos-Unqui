@@ -13,8 +13,6 @@ class Clock(Thread):
         self.cpuList.append(cpu)
 
     def run(self):
-        print('initializing clock')
-
         while True:
             self.lockProcessing.acquire()
             if (self.tick()):
