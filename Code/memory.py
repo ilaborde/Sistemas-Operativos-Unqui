@@ -12,9 +12,9 @@ class Memory:
         self.cells[index] = instruction
         self.lockInstructions.release()
 
-    def get(self, index):
+    def get(self, addressbase, index):
         #Obtain a instruction contained in the cell of the memory
-        cell= self.cells[index]
+        cell= self.cells[addressbase + index]
         return cell
 
 

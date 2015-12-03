@@ -27,7 +27,7 @@ class Cpu:
             if self.quantum > 0:
                 self.processPcb()
             else:
-                self.interruptionManager.handle(IRQ(IRQ.timeOut, self.currentPcb))
+                self.interruptionManager.handle(IRQ(IRQ.timeOut, self.currentPcb,None))
                 return True
 
     def processPcb(self):

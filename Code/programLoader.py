@@ -15,7 +15,7 @@ class ProgramLoader:
         program = self.disk.getProgram(programname)
         if program is not None:
             self.lockIrq.acquire()
-            pcb = self.createPcb(program)
+            pcb = self.createPcb(program,programname)
             self.pcbTable.addpcb(pcb)
             self.memoryManager.loadToMemory(pcb,program.instructions)
             irq = IRQ(IRQ.New, pcb,None)
@@ -25,7 +25,7 @@ class ProgramLoader:
         else:
             print ("Program not found")
 
-    def createPcb(self, program):
+    def createPcb(self, program, name):
         #create a pcb and loads the program in memory
         pid = self.pcbTable.getnewpid()
-        return Pcb(pid, len(program.instructions))
+        return Pcb(pid, len(program.instructions), name)

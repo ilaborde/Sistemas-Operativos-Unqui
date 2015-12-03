@@ -41,7 +41,7 @@ class kernelFactory:
         disk = diskFactory().configurationOfTheDiskWithThreePrograms()
 
         memory = MemoryFactory().createElement(lockInstructions)
-        memoryManager = MemoryManager(memory)
+        memoryManager = MemoryManager(memory,disk)
         interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue,
                                                                        lockIrqQueue)
 

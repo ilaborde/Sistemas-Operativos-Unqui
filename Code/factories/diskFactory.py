@@ -47,7 +47,6 @@ class diskFactory:
         program1.add(Instruction("Cpu Instruction1", InstructionType.cpu, ResourceType.Monitor))
         program1.add(Instruction("Cpu Instruction2", InstructionType.cpu, ResourceType.Monitor))
         program1.add(Instruction("Cpu Instruction3", InstructionType.cpu, ResourceType.Monitor))
-        program1.add(Instruction("io Instruction4", InstructionType.io, ResourceType.Printer))
         program1.add(Instruction("io Instruction5", InstructionType.io, ResourceType.Printer))
         program1.add(Instruction("Cpu Instruction6", InstructionType.cpu, ResourceType.Monitor))
         program1.add(Instruction("Cpu Instruction7", InstructionType.cpu, ResourceType.Monitor))

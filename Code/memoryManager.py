@@ -3,9 +3,10 @@ from Code.memoryFrame import MemoryFrame
 
 
 class MemoryManager:
-    def __init__(self, memory):
+    def __init__(self, memory,disk):
         self.pageTableList = {}
         self.memory = memory
+        self.disk = disk
         ##create memory frames free
         ##todo move to factory
         self.freeMemoryFrames = Queue()
@@ -54,12 +55,21 @@ class MemoryManager:
             self.memory.put(i, instructions[i])
 
     def getInstrucction(self, pcb):
-        frame = self.pageTableList.get(pcb.pid)
-        frame[pcb.pc + self.currentPcb.memoryPosition]
-        # devuelve la instruccion que sigue, si no esta, va a buscarla a disco y la carga al page table
-        # busca la tabla del pcb
-        # calcula donde la instruccion y la devuelve
-        pass
+        tables = self.pageTableList.get(pcb.pid)
+        pageNumber = (pcb.pc // 4)
+        frame = tables.get(pageNumber,None) #get page
+        if frame is not None:
+            modInstruction = pcb.pc % 4# get instruction
+            instruction = self.memory.get(frame.addressBase,modInstruction )
+        else:
+            frame = self.freeMemoryFrames.get()
+            tables[pageNumber] = frame
+            program = self.disk.getProgram(pcb.programName)
+            self.writeToMemory(frame.addressBase, program.instructions)
+            modInstruction = pcb.pc % 4# get instruction
+            instruction = self.memory.get(frame.addressBase,modInstruction )
+
+        return instruction
 
     def release(self, pcb):
         # busca la tabla del pcb

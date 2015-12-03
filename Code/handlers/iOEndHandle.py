@@ -3,7 +3,6 @@ class IOEndHandle:
         self.scheduler= scheduler
 
     def handle(self, irq):
-
         self.scheduler.addPcbToReadyQueue(irq.currentPcb)
         self.scheduler.setNextPcbToCpu()
 
