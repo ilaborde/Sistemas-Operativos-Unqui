@@ -11,7 +11,7 @@ class MemoryManager:
         ##todo move to factory
         self.freeMemoryFrames = Queue()
         for i in range(0, int((len(memory.cells) / 4))):
-            self.freeMemoryFrames.put(MemoryFrame(i + 1, 4, i))
+            self.freeMemoryFrames.put(MemoryFrame(i + 1, 4, i*4))
 
     def loadToMemory(self, pcb, instructions):
         # calculate page count
@@ -34,8 +34,12 @@ class MemoryManager:
         self.pageTableList[pcb.pid] = curretPageTable
 
     def writeToMemory(self, addressBase, instructions):
+        # to = addressBase + 4
+        # if(len(instructions) < to):
+        #     to = len(instructions)
         for i in range(addressBase, addressBase + 4):
-            self.memory.put(i, instructions[i])
+            if instructions.qsize() > 0:
+                self.memory.put(i, instructions.get())
 
     def getInstrucction(self, pcb):
         tables = self.pageTableList.get(pcb.pid)
@@ -55,7 +59,9 @@ class MemoryManager:
         return instruction
 
     def release(self, pcb):
-        # busca la tabla del pcb
+        frames = self.pageTableList.get(pcb.pid)
+        for e in range(0, len(frames)):
+            self.freeMemoryFrames.put(frames[e])
+        self.pageTableList.pop(pcb.pid)
         # borra la tabla de pagina
         # pone el marco en la lista de marcos libres
-        pass
