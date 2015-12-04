@@ -1,10 +1,13 @@
+from queue import Queue
 import unittest
 from unittest.mock import Mock
 
 from Code.IRQ import IRQ
 from Code.cpu import Cpu
+from Code.disk import Disk
 from Code.instructions import Instruction, ResourceType, InstructionType
 from Code.memory import Memory
+from Code.memoryManager import MemoryManager
 from Code.pcb import Pcb
 from Test.Matcher import Matcher
 
@@ -18,24 +21,30 @@ class TestsCpu(unittest.TestCase):
         self.lockPcbMock =Mock()
         self.irqQueueMock =Mock()
         self.lockIrqQueueMock = Mock()
-        self.cpu = Cpu(self.memory, self.interruptionManagerMock, self.lockPcbMock, self.irqQueueMock, self.lockIrqQueueMock, Mock())
+        self.disk= Disk()
+        self.memoryManager= MemoryManager(self.memory, self.disk)
+        self.cpu = Cpu(self.memoryManager, self.interruptionManagerMock, self.lockPcbMock, self.irqQueueMock, self.lockIrqQueueMock, Mock())
 
     def test_when_fetch_end_of_program_then_call_kill_handler(self):
+        queueInstruction= Queue()
         instruction = Instruction("", InstructionType.kill, ResourceType.Monitor)
-        self.memory.put([instruction])
         pcbfinished = Pcb(0, 0, 1)
+        queueInstruction.put(instruction)
+        self.memoryManager.loadToMemory(pcbfinished, queueInstruction)
         self.cpu.setPcb(pcbfinished, self.quantum)
         self.cpu.fetch()
-        irq = IRQ(IRQ.kill, pcbfinished)
+        irq = IRQ(IRQ.kill, pcbfinished, self.memoryManager)
         self.interruptionManagerMock.handle.assert_called_with(Matcher(irq))
 
     def test_when_fetch_io_instruction_then_call_handle_io(self):
+        queueInstruction= Queue()
         instruction = Instruction("", InstructionType.io, ResourceType.Monitor)
-        self.memory.put([instruction])
-        pcb = Pcb(0, 1, 1)
+        pcb = Pcb(0, 0, 1)
+        queueInstruction.put(instruction)
+        self.memoryManager.loadToMemory(pcb, queueInstruction)
         self.cpu.setPcb(pcb, self.quantum)
         self.cpu.fetch()
-        irq = IRQ(IRQ.IO, pcb)
+        irq = IRQ(IRQ.IO, pcb, instruction)
         self.interruptionManagerMock.handle.assert_called_with(Matcher(irq))
 
     def test_when_fetch_quantum_equal_zero_then_call_time_out(self):
@@ -43,15 +52,6 @@ class TestsCpu(unittest.TestCase):
         self.quantum = 0
         self.cpu.setPcb(pcb, self.quantum)
         self.cpu.fetch()
-        irq = IRQ(IRQ.timeOut, pcb)
+        irq = IRQ(IRQ.timeOut, pcb, None)
         self.interruptionManagerMock.handle.assert_called_with(Matcher(irq))
 
-    def test_when_fetch_quantum_decreases_to_zero_then_call_time_out(self):
-        instruction = Instruction("", InstructionType.cpu, ResourceType.Monitor)
-        instruction2 = Instruction("", InstructionType.cpu, ResourceType.Monitor)
-        self.memory.put([instruction, instruction2])
-        pcb = Pcb(0, 2, 2)
-        self.cpu.setPcb(pcb, self.quantum)
-        self.cpu.fetch()
-        irq = IRQ(IRQ.timeOut, pcb)
-        self.interruptionManagerMock.handle.assert_called_with(Matcher(irq))

@@ -3,7 +3,7 @@ from queue import Queue
 
 class Program:
     def __init__(self):
-        self.instructions = {}
+        self.instructions = Queue()
         self.queueInstructions = Queue()
     def add(self, instruction):
         #Add instructions into the program
