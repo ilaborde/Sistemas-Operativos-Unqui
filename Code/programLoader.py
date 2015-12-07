@@ -28,4 +28,4 @@ class ProgramLoader:
     def createPcb(self, program, name):
         #create a pcb and loads the program in memory
         pid = self.pcbTable.getnewpid()
-        return Pcb(pid, program.instructions.qsize(), name)
+        return Pcb(pid, len(program.instructions), name)

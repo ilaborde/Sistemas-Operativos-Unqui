@@ -46,7 +46,7 @@ class kernelFactory:
                                                                        lockIrqQueue)
 
         cpu = CpuBuilder().createElement(memoryManager, interruptionManager, lockPcb, irqQueue, lockIrqQueue, lockInstructions)
-        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 4, lockReadyQueue)
+        scheduler = SchedulerBuilder().createElement(cpu, readyQueue, 1, lockReadyQueue)
         ##todo remove memory
         monitorDevice = Monitor(interruptionManager, lockInstructions)
         printerDevice = Printer(interruptionManager, lockInstructions)

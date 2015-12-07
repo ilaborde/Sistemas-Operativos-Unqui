@@ -17,13 +17,10 @@ class Device(Thread):
 
     def processInstruction(self):
         # process a instruction and trigger the interruption
-        try:
+        if (self.queue.qsize() > 0):
             irq = self.queue.get_nowait()
-            self.lockInstructions.acquire()
-            self.lockInstructions.release()
             irq.currentPcb.incrementPc()
             print(irq.instruction.text + ', pid: ' + str(irq.currentPcb.pid))
-            self.interruptionManager.handle(IRQ(IRQ.EndIO, irq.currentPcb))
+            self.interruptionManager.handle(IRQ(IRQ.EndIO, irq.currentPcb, None))
 
-        except:
-            pass
+

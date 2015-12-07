@@ -25,7 +25,7 @@ class Cpu:
         #Process the pcb when the clock calls this method of the cpu
         if self.currentPcb is not None:
             if self.quantum > 0:
-                self.processPcb()
+                return self.processPcb()
             else:
                 self.interruptionManager.handle(IRQ(IRQ.timeOut, self.currentPcb,None))
                 return True

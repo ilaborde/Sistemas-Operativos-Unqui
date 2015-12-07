@@ -21,5 +21,7 @@ class Clock(Thread):
             time.sleep(0.5)
 
     def tick(self):
+        clockShouldWait= False
         for cpu in self.cpuList:
-            cpu.fetch()
+            clockShouldWait= cpu.fetch()
+        return clockShouldWait

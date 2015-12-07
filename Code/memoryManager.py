@@ -10,6 +10,7 @@ class MemoryManager:
         ##create memory frames free
         ##todo move to factory
         self.freeMemoryFrames = Queue()
+        self.lastInstructionPositionForPcb = {}
         for i in range(0, int((len(memory.cells) / 4))):
             self.freeMemoryFrames.put(MemoryFrame(i + 1, 4, i*4))
 
@@ -30,16 +31,29 @@ class MemoryManager:
             pageCount -= 1
 
         curretPageTable[0] = frame
-        self.writeToMemory(frame.addressBase, instructions)
+        self.writeToMemory(frame.addressBase, instructions, pcb)
         self.pageTableList[pcb.pid] = curretPageTable
 
-    def writeToMemory(self, addressBase, instructions):
-        # to = addressBase + 4
-        # if(len(instructions) < to):
-        #     to = len(instructions)
-        for i in range(addressBase, addressBase + 4):
-            if instructions.qsize() > 0:
-                self.memory.put(i, instructions.get())
+    def writeToMemory(self, addressBase, instructions, pcb):
+
+        max= addressBase + 4
+        index= addressBase
+        count= self.lastInstructionPositionForPcb.get(pcb.pid, None)
+
+        if count == None:
+            count = 0
+
+        while (not index > max):
+             try:
+                self.memory.put(index, instructions[count])
+             except:
+                 pass
+             index += 1
+             count += 1
+        self.lastInstructionPositionForPcb[pcb.pid] = count
+        # for i in range(addressBase, addressBase + 4):
+        #     if len(instructions)> 0:
+        #         self.memory.put(i, instructions[pcb.pc])
 
     def getInstrucction(self, pcb):
         tables = self.pageTableList.get(pcb.pid)
@@ -52,7 +66,7 @@ class MemoryManager:
             frame = self.freeMemoryFrames.get()
             tables[pageNumber] = frame
             program = self.disk.getProgram(pcb.programName)
-            self.writeToMemory(frame.addressBase, program.instructions)
+            self.writeToMemory(frame.addressBase, program.instructions, pcb)
             modInstruction = pcb.pc % 4# get instruction
             instruction = self.memory.get(frame.addressBase,modInstruction )
 
