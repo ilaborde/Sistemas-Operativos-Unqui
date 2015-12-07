@@ -43,7 +43,7 @@ class MemoryManager:
         if count == None:
             count = 0
 
-        while (not index > max):
+        while (not index == max):
              try:
                 self.memory.put(index, instructions[count])
              except:
@@ -56,15 +56,15 @@ class MemoryManager:
         #         self.memory.put(i, instructions[pcb.pc])
 
     def getInstrucction(self, pcb):
-        tables = self.pageTableList.get(pcb.pid)
+        tableOfPcb = self.pageTableList.get(pcb.pid)
         pageNumber = (pcb.pc // 4)
-        frame = tables.get(pageNumber,None) #get page
+        frame = tableOfPcb.get(pageNumber,None) #get page
         if frame is not None:
             modInstruction = pcb.pc % 4# get instruction
             instruction = self.memory.get(frame.addressBase,modInstruction )
         else:
             frame = self.freeMemoryFrames.get()
-            tables[pageNumber] = frame
+            tableOfPcb[pageNumber] = frame
             program = self.disk.getProgram(pcb.programName)
             self.writeToMemory(frame.addressBase, program.instructions, pcb)
             modInstruction = pcb.pc % 4# get instruction
@@ -77,5 +77,4 @@ class MemoryManager:
         for e in range(0, len(frames)):
             self.freeMemoryFrames.put(frames[e])
         self.pageTableList.pop(pcb.pid)
-        # borra la tabla de pagina
-        # pone el marco en la lista de marcos libres
+
