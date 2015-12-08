@@ -4,8 +4,8 @@ class Policies:
 
 
 class Scheduler:
-    def __init__(self, cpu, queue, quantum, lockReadyQueue):
-        self.currentCpu = cpu
+    def __init__(self, queue, quantum, lockReadyQueue):
+        self.currentCpuList = []
         self.currentReadyQueue = queue
         self.quantum = quantum
         self.lockReadyQueue= lockReadyQueue
@@ -16,12 +16,14 @@ class Scheduler:
         self.currentReadyQueue.put(pcb)
         self.lockReadyQueue.release()
 
+    def registryCpu(self, cpu):
+        self.currentCpuList.append(cpu)
 
     def setNextPcbToCpu(self):
         #Sets the next pcb to the cpu if the readyQueue isn`t empty
-        self.lockReadyQueue.acquire()
-        if self.currentReadyQueue.qsize() > 0:
-
-            self.currentCpu.setPcb(self.currentReadyQueue.get(), self.quantum)
-        self.lockReadyQueue.release()
+            for cpu in self.currentCpuList:
+                self.lockReadyQueue.acquire()
+                if self.currentReadyQueue.qsize() > 0 and cpu.currentPcb == None:
+                    cpu.setPcb(self.currentReadyQueue.get(), self.quantum)
+                self.lockReadyQueue.release()
 

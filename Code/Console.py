@@ -1,4 +1,6 @@
 from threading import Thread
+import sys
+from tkinter import Tk, Label, mainloop
 
 
 class Console(Thread):
@@ -16,15 +18,17 @@ class Console(Thread):
 
         while True:
 
-              command = input('Enter a command: ').strip().lower()
+              command = input('> Enter a command: ').strip().lower()
               com = command.split()
               if com[0] == 'exec':
                  self.kernel.load(com[1])
+
               elif com[0] == 'list':
                 print('Doing something else')
               elif com[0] == 'quit':
                 print('shutting down...')
-                quit()
+                self.kernel.shouldShutDown= True
+                raise SystemExit
               else:
                 print('Invalid Command.')
 

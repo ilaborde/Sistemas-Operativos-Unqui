@@ -1,11 +1,14 @@
 from threading import Thread
+import sys
+from tkinter import Label, Tk, mainloop
 from Code.IRQ import IRQ
 from Code.instructions import InstructionType
 
 
+
 class Cpu:
 
-    def __init__(self, memoryManager, interruptionmanager, lockPcb, irqQueue, lockIrqQueue, lockInstructions):
+    def __init__(self, memoryManager, interruptionmanager, lockPcb, irqQueue, lockIrqQueue, lockInstructions, cpuId):
         self.memoryManager = memoryManager
         self.interruptionManager = interruptionmanager
         self.currentPcb = None
@@ -14,6 +17,8 @@ class Cpu:
         self.lockIrqQueue= lockIrqQueue
         self.irqQueue= irqQueue
         self.lockInstructions= lockInstructions
+        self.cpuId= cpuId
+
 
     def setPcb(self, pcb, quantum):
         #Set a quantum and a pcb into cpu to process it
@@ -27,7 +32,7 @@ class Cpu:
             if self.quantum > 0:
                 return self.processPcb()
             else:
-                self.interruptionManager.handle(IRQ(IRQ.timeOut, self.currentPcb,None))
+                self.interruptionManager.handle(IRQ(IRQ.timeOut, self.currentPcb,None, self))
                 return True
 
     def processPcb(self):
@@ -37,18 +42,18 @@ class Cpu:
         self.lockInstructions.release()
         if instruction.type == InstructionType.kill:
             # end of the program
-            print(instruction.text + ', pid: ' + str(self.currentPcb.pid))
-            self.interruptionManager.handle(IRQ(IRQ.kill, self.currentPcb,instruction))
+            print(instruction.text + ', pid: ' + str(self.currentPcb.pid) + " processed by cpu: " + self.cpuId)
+            self.interruptionManager.handle(IRQ(IRQ.kill, self.currentPcb,instruction, self))
             return True
 
         if instruction.type == InstructionType.cpu:
-            print(instruction.text + ', pid: ' + str(self.currentPcb.pid))
+            print(instruction.text + ', pid: ' + str(self.currentPcb.pid) + " processed by cpu: " + self.cpuId)
             self.currentPcb.incrementPc()
             self.quantum -= 1
             return False
 
         if instruction.type == InstructionType.io:
-            self.interruptionManager.handle(IRQ(IRQ.IO, self.currentPcb,instruction))
+            self.interruptionManager.handle(IRQ(IRQ.IO, self.currentPcb,instruction, self))
             return True
 
 

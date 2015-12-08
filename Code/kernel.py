@@ -8,6 +8,7 @@ class Kernel(Thread):
         Thread.__init__(self)
         self.programsQueue = Queue()
         self.isFirstLoad = True
+        self.shouldShutDown= False
 
     def initializeKernel(self, clock, programloader, scheduler):
         self.programLoader = programloader
@@ -21,10 +22,11 @@ class Kernel(Thread):
     def run(self):
         Thread.run(self)
 
-        while True:
+        while not self.shouldShutDown:
             if not self.programsQueue.qsize() == 0:
                 program = self.programsQueue.get_nowait()
                 self.isFirstLoad = len(self.programLoader.pcbTable.pcbs) == 0
                 self.programLoader.load(program)
                 if self.isFirstLoad:
                     self.scheduler.setNextPcbToCpu()
+

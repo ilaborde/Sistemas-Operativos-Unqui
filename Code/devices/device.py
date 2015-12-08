@@ -20,7 +20,7 @@ class Device(Thread):
         if (self.queue.qsize() > 0):
             irq = self.queue.get_nowait()
             irq.currentPcb.incrementPc()
-            print(irq.instruction.text + ', pid: ' + str(irq.currentPcb.pid))
-            self.interruptionManager.handle(IRQ(IRQ.EndIO, irq.currentPcb, None))
+            print(irq.instruction.text + ', pid: ' + str(irq.currentPcb.pid) + " processed by cpu: " + irq.currentCpu.cpuId)
+            self.interruptionManager.handle(IRQ(IRQ.EndIO, irq.currentPcb, None, None))
 
 

@@ -5,7 +5,7 @@ class IOHandle:
         self.scheduler = scheduler
 
     def handle(self, irq):
-        self.scheduler.currentCpu.currentPcb = None
+        irq.currentCpu.currentPcb= None
         self.deviceManager.pushToDeviceQueue(irq)
 
 

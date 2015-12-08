@@ -6,6 +6,6 @@ class KillHandle:
 
     def handle(self, irq):
         self.memoryManager.release(irq.currentPcb)
-        self.pcbTable.removepcb(self.scheduler.currentCpu.currentPcb.pid)
-        self.scheduler.currentCpu.currentPcb = None
+        self.pcbTable.removepcb(irq.currentCpu.currentPcb.pid)
+        irq.currentCpu.currentPcb= None
         self.scheduler.setNextPcbToCpu()

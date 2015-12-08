@@ -18,7 +18,7 @@ class ProgramLoader:
             pcb = self.createPcb(program,programname)
             self.pcbTable.addpcb(pcb)
             self.memoryManager.loadToMemory(pcb,program.instructions)
-            irq = IRQ(IRQ.New, pcb,None)
+            irq = IRQ(IRQ.New, pcb,None, None)
             self.interruptionManager.handle(irq)
             self.lockIrq.wait()
             self.lockIrq.release()

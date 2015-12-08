@@ -6,11 +6,9 @@ class ClockBuilder:
     def __init__(self):
         pass
 
-    def createElement(self, cpu, lockProcessing):
+    def createElement(self, lockProcessing):
 
         clock = Clock(lockProcessing)
-        clock.registrycpu(cpu)
-
         return clock
 
 
