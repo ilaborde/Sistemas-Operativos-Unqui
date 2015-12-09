@@ -20,10 +20,7 @@ class Shell(Thread):
         self.x= ""
 
     def printText(self, line):
-
         pass
-
-
 
     def initializeConsole(self):
 

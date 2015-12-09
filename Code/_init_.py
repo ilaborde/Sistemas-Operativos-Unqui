@@ -17,10 +17,13 @@ if __name__ == '__main__':
     console = Console()
     kernel.load("program0")
     kernel.load("program0")
+    kernel.load("program0")
+    kernel.load("program0")
 
     #----------
-
-    # console.start(kernel) to run simple console
+    # kernel = kernelFactory().configurationTwo()
+    # console = Console()
+    # console.start(kernel) #to run simple console
     # console.run()
 
 

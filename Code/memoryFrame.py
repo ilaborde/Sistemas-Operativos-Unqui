@@ -4,3 +4,4 @@ class MemoryFrame:
         self.markSize = markSize
         self.id = id
         self.addressBase = addressBase
+        self.isInSwapping= False

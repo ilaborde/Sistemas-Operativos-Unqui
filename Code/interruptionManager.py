@@ -34,7 +34,7 @@ class InterruptionManager(Thread):
                 self.lockIrqQueue.release()
                 self.lockProcessing.notifyAll()
                 self.lockProcessing.release()
-                time.sleep(0.5)
+                time.sleep(0.2)
 
     def handle(self, irq):
         #add element to irqQueue

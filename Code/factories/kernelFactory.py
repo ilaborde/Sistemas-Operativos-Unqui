@@ -14,7 +14,7 @@ from Code.kernel import Kernel
 from Code.memoryManager import MemoryManager
 from Code.pcbTable import PcbTable
 from Code.factories.interruptionManagerBuilder import interruptionManagerBuilder
-
+from Code.swapDisk import SwapDisk
 
 
 class kernelFactory:
@@ -31,13 +31,15 @@ class kernelFactory:
         irqQueue = Queue()
         lockIrqQueue = Condition()
         lockProcessing = Condition()
+        swapDisk= SwapDisk()
+
 
         InterruptionManagerBuilder = interruptionManagerBuilder()
         readyQueue = Queue()
         disk = diskFactory().configurationOfTheDiskWithThreePrograms()
 
         memory = MemoryFactory().createElement(lockInstructions)
-        memoryManager = MemoryManager(memory,disk)
+        memoryManager = MemoryManager(memory,disk, swapDisk)
         interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue,
                                                                        lockIrqQueue)
 
@@ -80,13 +82,14 @@ class kernelFactory:
         irqQueue = Queue()
         lockIrqQueue = Condition()
         lockProcessing = Condition()
+        swapDisk= SwapDisk()
 
         InterruptionManagerBuilder = interruptionManagerBuilder()
         readyQueue = Queue()
         disk = diskFactory().configurationOfTheDiskWithThreePrograms()
 
         memory = MemoryFactory().createElement(lockInstructions)
-        memoryManager = MemoryManager(memory,disk)
+        memoryManager = MemoryManager(memory,disk, swapDisk)
         interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue,
                                                                        lockIrqQueue)
 
