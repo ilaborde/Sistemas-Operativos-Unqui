@@ -34,7 +34,7 @@ class TestsProgramLoader(unittest.TestCase):
         self.interruptionManager.registerHandler(IRQ.timeOut, self.timeOutHandleMock)
         self.interruptionManager.registerHandler(IRQ.IO, self.ioHandleMock)
         self.programLoader= ProgramLoader(self.disk, self.memory, self.interruptionManager, PcbTable(), self.lockIrq)
-        self.memoryManager= MemoryManager(self.memory, self.disk)
+        self.memoryManager= MemoryManager(self.memory, self.disk,Mock(),Mock())
 
     def test_when_have_a_program_Then_I_want_to_create_a_pcb_with_pid_1(self):
 

@@ -16,7 +16,7 @@ class TestsClock(unittest.TestCase):
     def test_when_registry_cpu_then_verify_registry_list_is_incremented(self):
         self.memory = Mock()
         self.interruptionManagerMock = Mock()
-        cpu = Cpu(self.memory, self.interruptionManagerMock, self.lockPcbMock,self.irqQueueMock, self.lockIrqQueueMock, self.lockInstruction)
+        cpu = Cpu(self.memory, self.interruptionManagerMock, self.lockPcbMock,self.irqQueueMock, self.lockIrqQueueMock, self.lockInstruction,'1')
 
         clock = Clock(self.lockProcessingMock)
         clock.registrycpu(cpu)

@@ -29,7 +29,7 @@ class InterruptionManagerTests(unittest.TestCase):
 
     def testCanHandleKILL(self):
         self.interruptionManager.setDaemon(True)
-        irq = IRQ(IRQ.kill, Pcb(0, 0, 0), None)
+        irq = IRQ(IRQ.kill, Pcb(0, 0, 0), None,Mock())
         self.interruptionManager.handle(irq)
         self.interruptionManager.start()
         self.killHandleMock.handle.assert_called_with(irq)
@@ -38,7 +38,7 @@ class InterruptionManagerTests(unittest.TestCase):
 
     def testCanHandleTIMEOUT(self):
         self.interruptionManager.setDaemon(True)
-        irq = IRQ(IRQ.timeOut, Pcb(0, 0, 0), None)
+        irq = IRQ(IRQ.timeOut, Pcb(0, 0, 0), None, Mock())
         self.interruptionManager.handle(irq)
         self.interruptionManager.start()
         self.timeOutHandleMock.handle.assert_called_with(irq)
@@ -47,7 +47,7 @@ class InterruptionManagerTests(unittest.TestCase):
 
     def testCanHandleIO(self):
         self.interruptionManager.setDaemon(True)
-        irq = IRQ(IRQ.IO, Pcb(0, 0, 1), None)
+        irq = IRQ(IRQ.IO, Pcb(0, 0, 1), None, Mock())
         self.interruptionManager.handle(irq)
         self.interruptionManager.start()
         self.ioHandleMock.handle.assert_called_with(irq)
