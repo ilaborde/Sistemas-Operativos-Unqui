@@ -92,7 +92,7 @@ class MemoryManager:
                     modInstruction = pcb.pc % 4# get instruction
                     instruction = self.memory.get(frame.addressBase,modInstruction )
                 else:
-                    self.releasePageAndPutOnSwapDisk(self.lastRecentlyUsedPage, pcb)
+                    self.releasePageAndPutOnSwapDisk(self.getLastRecentlyUsedPage(), pcb)
                     frame = self.freeMemoryFrames.get()
                     page= tableOfPcb[pageNumber]
                     page.registryFrame(frame)
@@ -101,13 +101,6 @@ class MemoryManager:
                     modInstruction = pcb.pc % 4# get instruction
                     instruction = self.memory.get(frame.addressBase,modInstruction )
 
-
-        if self.lastRecentlyUsedPage== None:
-            self.lastRecentlyUsedPage= page
-
-        if not self.lastRecentlyUsedPage == None:
-            if page.frecuencyCount < self.lastRecentlyUsedPage.frecuencyCount:
-                self.lastRecentlyUsedPage= page
 
         page.incrementFrecuencyCount()
         return instruction
@@ -122,6 +115,7 @@ class MemoryManager:
         #todo hacer swap, recuperar instrucciones
         pageDeleted= self.deletePage(LastRecentlyUsedPage)
         frame= pageDeleted.frame
+
         frame.isInSwapping = True
 
         self.freeMemoryFrames.put(frame)
@@ -136,12 +130,12 @@ class MemoryManager:
         while not count1 > len(self.pageTableList):
             try:
                 count2= 0
-                page= self.pageTableList[count1]
-                while not count2 > len(page):
+                pageTable= self.pageTableList[count1]
+                while not count2 > len(pageTable):
                     try:
-                        if (page[count2].id == pageToDelete.id):
-                             pageDeleted= page[count2]
-                             page.pop(count2)
+                        if (pageTable[count2].id == pageToDelete.id):
+                             pageDeleted= pageTable[count2]
+                             pageTable.pop(count2)
                     except:
                         pass
                     count2 +=1
@@ -164,13 +158,25 @@ class MemoryManager:
 
         return instructionsDeleted
 
-    def writeInstructionsOnMemory(self, frame, instructions):
+    def getLastRecentlyUsedPage(self):
 
-        count= 0
-        for i in range(frame.addressBase, frame.addressBase + 4 ):
+        count1= 1
+        pageAux= self.pageTableList[count1][0]
+        while not count1 > len(self.pageTableList):
             try:
-                self.memory.cells[i] = instructions[count]
-                count += 1
+                count2= 0
+                pageTable= self.pageTableList[count1]
+                while not count2 > len(pageTable):
+                    try:
+                        if (pageTable[count2].frecuencyCount < pageAux.frecuencyCount and not pageTable[count2].frame == None):
+                             pageAux= pageTable[count2]
+                    except:
+                        pass
+                    count2 +=1
             except:
                 pass
+            count1 +=1
+
+        return pageAux
+
 
