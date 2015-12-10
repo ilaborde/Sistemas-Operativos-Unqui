@@ -24,7 +24,6 @@ class Shell(Thread):
 
     def initializeConsole(self):
 
-
         # define a command that starts new terminal
         if platform.system() == "Windows":
             self.window= "cmd.exe /c start".split()
@@ -35,7 +34,7 @@ class Shell(Thread):
         echo = [sys.executable, "-c",
                 "from Code.Console import Console ; "
                 "from Code.factories.kernelFactory import * ;"
-                "kernel = kernelFactory().selectConfiguration(1) ;"
+                "kernel = kernelFactory().configurationTwo() ;"
                 "console = Console(); "
                 "console.start(kernel) ;"
                 "console.run();"]

@@ -5,6 +5,7 @@ from Code.factories.clockBuilder import ClockBuilder
 from Code.factories.cpuBuilder import CpuBuilder
 from Code.factories.deviceManagerBuilder import DeviceManagerBuilder
 from Code.factories.diskFactory import diskFactory
+from Code.factories.framesFactory import FramesFactory
 from Code.factories.memoryFactory import MemoryFactory
 from Code.factories.programLoaderBuilder import ProgramLoaderBuilder
 from Code.factories.schedulerBuilder import SchedulerBuilder
@@ -39,7 +40,8 @@ class kernelFactory:
         disk = diskFactory().configurationOfTheDiskWithThreePrograms()
 
         memory = MemoryFactory().createElement(lockInstructions)
-        memoryManager = MemoryManager(memory,disk, swapDisk)
+        frames = FramesFactory().createElement(len(memory.cells))
+        memoryManager = MemoryManager(memory,disk, swapDisk,frames)
         interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue,
                                                                        lockIrqQueue)
 
@@ -89,7 +91,8 @@ class kernelFactory:
         disk = diskFactory().configurationOfTheDiskWithThreePrograms()
 
         memory = MemoryFactory().createElement(lockInstructions)
-        memoryManager = MemoryManager(memory,disk, swapDisk)
+        frames = FramesFactory().createElement(len(memory.cells))
+        memoryManager = MemoryManager(memory,disk, swapDisk,frames)
         interruptionManager = InterruptionManagerBuilder.createElement(lockReadyQueue, lockProcessing, irqQueue,
                                                                        lockIrqQueue)
 
